@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneManager : MonoBehaviour
+public class SceneController : MonoBehaviour
 {
-    public static SceneManager instance;
+    public static SceneController instance;
     private void Awake()
     {
         if (instance == null)
@@ -22,5 +22,9 @@ public class SceneManager : MonoBehaviour
     {
     }
 
+    public void changeScene(string sceneName)
+    {
+
+    }
 
 }

@@ -13,6 +13,13 @@ public class GameManager : MonoBehaviour
     private bool _initialTurn; // true = player, false = AI
     private string _winner; // Player 1, AI or Draw
 
+    public string musicWinner = "";
+    public string musicLoser = "";
+    public string musicDraw = "";
+    public string SFXFire = "";
+    public string SFXIce = "";
+
+
     private void Awake()
     {
         DontDestroyOnLoad(this);
