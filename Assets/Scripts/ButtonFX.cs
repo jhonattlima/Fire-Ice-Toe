@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class ButtonFX : MonoBehaviour
 {
-
     public AudioSource SFX;
     public AudioClip HighlightFx;
 

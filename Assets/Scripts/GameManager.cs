@@ -6,85 +6,48 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // Variables
-    private int _playerMagic; // 1 = fire, 2= ice
-    private int _aiMagic; // !playerMagic
-    private string _difficulty; // Easy, Impossible
-    private int _boardSize; // 3
-    private bool _initialTurn; // true = player, false = AI
-    private string _winner; // Player 1, AI or Draw
-
-    public string musicWinner = "";
-    public string musicLoser = "";
-    public string musicDraw = "";
-    public string SFXFire = "";
-    public string SFXIce = "";
-
+    public static GameManager instance;
+    public int playerMagic; // 1 = fire, 2= ice
+    public int aiMagic; // !playerMagic
+    public string difficulty; // Easy, Impossible
+    public int boardSize = 3; // 3
+    public bool initialTurn; // true = player, false = AI
+    public string winner; // Player 1, AI or Draw
+    public string musicBoard = "musicBoard";
+    public string musicMainMenu = "musicMainMenu";
+    public string musicDraw = "musicDraw";
+    public string musicWinner = "musicWinner";
+    public string musicLoser = "musicLoser";
+    public string SFXFire = "sfxFire";
+    public string SFXIce = "sfxIce";
+    public string sceneBoard = "Board 3x3";
+    public string sceneMainMenu = "Menu";
+    public string sceneGameOver = "Game Over";
+    public bool turn;
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
-    }
-
-    // GETTERS AND SETTERS
-    public int getPlayerMagic()
-    {
-        return this._playerMagic;
-    }
-    public void setPlayerMagic(int playerMagic)
-    {
-        this._playerMagic = playerMagic;
-        if (playerMagic == 1)
+        if (instance == null)
         {
-            _aiMagic = 2;
+            instance = this;
         }
         else
         {
-            _aiMagic = 1;
+            Destroy(gameObject);
         }
+        DontDestroyOnLoad(this);
     }
 
-    public int getAIMagic()
+    public void setPlayerMagic(int playerMagic)
     {
-        return this._aiMagic;
-    }
-
-    public string getDifficulty()
-    {
-        return this._difficulty;
-    }
-
-    public void setDifficulty(string difficulty)
-    {
-        this._difficulty = difficulty;
-    }
-
-    public bool getTurn()
-    {
-        return this._initialTurn;
-    }
-
-    public void setTurn(bool initialTurn)
-    {
-        this._initialTurn = initialTurn;
-    }
-
-    public int getBoardSize()
-    {
-        return _boardSize;
-    }
-
-    public void setBoardSize(int boardSize)
-    {
-        this._boardSize = boardSize;
-    }
-
-    public string getWinner()
-    {
-        return _winner;
-    }
-
-    public void setWinner(string winner)
-    {
-        this._winner = winner;
+        this.playerMagic = playerMagic;
+        if (playerMagic == 1)
+        {
+            aiMagic = 2;
+        }
+        else
+        {
+            aiMagic = 1;
+        }
     }
 }

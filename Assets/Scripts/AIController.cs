@@ -5,21 +5,12 @@ using UnityEngine;
 public class AIController : MonoBehaviour
 {
     // Variables
-    private GameManager _gameManagerPrefab; // Game manager imported to use variables
-    [SerializeField]
-    private BoardManager _boardManagerPrefab; // Board manager imported to use methods
-    private int _magic; // AI magic (not player selected magic)
+    public BoardManager _boardManagerPrefab; // Board manager imported to use methods
     private int line, column; // For use in minimax, getting the best line, column to move
-
-    private void Start()
-    {
-        _gameManagerPrefab = GameObject.Find("GameManager").GetComponent<GameManager>();
-        this._magic = _gameManagerPrefab.getAIMagic();    
-    }
 
     // AI play
     public bool play() {
-        if (_gameManagerPrefab.getDifficulty().Equals("Easy"))
+        if (GameManager.instance.Equals("Easy"))
         {
             dummyPlay(_boardManagerPrefab.getBoard()); // Check the dummy play and do it
         } else
@@ -40,7 +31,7 @@ public class AIController : MonoBehaviour
             line = Random.Range(0, 3);
             column = Random.Range(0, 3);
         }
-        _boardManagerPrefab.setMagic(line, column, _magic); // AI plays in the defined line and column
+        _boardManagerPrefab.setMagic(line, column, GameManager.instance.aiMagic); // AI plays in the defined line and column
         Debug.Log("AI dummy played at line: " + line + " Column: " + column);
     }
 
@@ -48,7 +39,6 @@ public class AIController : MonoBehaviour
     private void bestPlay(int[,] board)
     {
         int oldValue = -999999; // Variables to store the values
-
         // Test all possible plays
         for (int i = 0; i < board.GetLength(0); i++)
         {
@@ -58,7 +48,7 @@ public class AIController : MonoBehaviour
                 if (board[i, j] == 0)
                 {
                     int[,] copyBoard = (int[,])board.Clone(); // Create a new string board that's a copy of entered parameter board
-                    copyBoard[i, j] = _magic;
+                    copyBoard[i, j] = GameManager.instance.aiMagic;
                     int newValue = miniMax(copyBoard, false);
                     if (newValue > oldValue)
                     {
@@ -70,7 +60,7 @@ public class AIController : MonoBehaviour
                 }
             }
         }
-        _boardManagerPrefab.setMagic(line, column, _magic); // AI plays in the defined line and column
+        _boardManagerPrefab.setMagic(line, column, GameManager.instance.aiMagic); // AI plays in the defined line and column
         Debug.Log("AI smartly played at line: " + line + " Column: " + column);
     }
 
@@ -103,12 +93,12 @@ public class AIController : MonoBehaviour
                         int[,] copyBoard = (int[,])miniboard.Clone(); // Create a new int board that's a copy of entered parameter board
                         if (!turn) // Simulating player 1 turn
                         {
-                            copyBoard[i, j] = _gameManagerPrefab.getPlayerMagic();
+                            copyBoard[i, j] = GameManager.instance.playerMagic;
                             value = Mathf.Min(value, miniMax(copyBoard, !turn));
                         }
                         else if (turn) // Simulating AI turn
                         {
-                            copyBoard[i, j] = _magic;
+                            copyBoard[i, j] = GameManager.instance.aiMagic;
                             value = Mathf.Max(value, miniMax(copyBoard, !turn));
                         }
                     }
@@ -121,20 +111,14 @@ public class AIController : MonoBehaviour
     // Function to calculate score
     private int calcScore(int[,] board)
     {
-        if(_boardManagerPrefab.isGameOver(board) == this._magic)
+        if(_boardManagerPrefab.isGameOver(board) == GameManager.instance.aiMagic)
         {
             return +1; // AI won
         }
-        else if (_boardManagerPrefab.isGameOver(board) == this._gameManagerPrefab.getPlayerMagic())
+        else if (_boardManagerPrefab.isGameOver(board) == GameManager.instance.playerMagic)
         {
             return -1; // Player 1 won
         } 
         return 0; //Draw
-    }
-
-    //Getters and setters 
-    public void setMagic(int magic)
-    {
-        this._magic = magic;
     }
 }

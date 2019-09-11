@@ -26,18 +26,18 @@ public class GameOver : MonoBehaviour
     void Start()
     {
         _gameManagerPrefab = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Debug.Log("Game manager winner: " + _gameManagerPrefab.getWinner());
-        if (_gameManagerPrefab.getWinner().Equals("Draw")){
+        Debug.Log("Game manager winner: " + GameManager.instance.winner);
+        if (GameManager.instance.winner.Equals("Draw")){
             AudioSource.PlayClipAtPoint(_musicDraw, transform.position);
             _gameOverImage.sprite = _draw;
             Debug.Log(" This game finished in draw! :(");
-        } else if (_gameManagerPrefab.getWinner().Equals("Player")) {
+        } else if (GameManager.instance.winner.Equals("Player")) {
             AudioSource.PlayClipAtPoint(_musicPlayerWin, transform.position);
             _gameOverImage.sprite = _win;
             Debug.Log("Player 1 wins the game!");
         } else
         {
-            AudioSource.PlayClipAtPoint(_musicAIWin, transform.position);
+            MusicPlayer.instance.Play(GameManager.instance.musicLoser);
             _gameOverImage.sprite = _lose;
             Debug.Log("AI wins the game!");
         }
@@ -46,8 +46,9 @@ public class GameOver : MonoBehaviour
 
     IEnumerator restartGame()
     {
+        string sceneMainMenu = GameManager.instance.sceneMainMenu; 
         Destroy(_gameManagerPrefab.gameObject);
         yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        SceneController.instance.changeScene(sceneMainMenu);
     }
 }

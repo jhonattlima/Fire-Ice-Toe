@@ -5,26 +5,19 @@ using UnityEngine;
 public class BoardManager : MonoBehaviour
 {
     // Variables 
-    private int _boardSize; // Size of the board
     private Space[,] _board; // Elements board
     private int[,] _intBoard; // Characters board for tracking
-    private GameManager _gameManagerPrefab; // Game manager prefab with all the instructions
-    [SerializeField]
-    private Space _spacePrefab; // Space prefab to be instantiated during board creation
-    [SerializeField]
-    private GameObject _icePrefab; // Ice prefab to be instantiated during board update
-    [SerializeField]
-    private GameObject _firePrefab; // Fire prefab to be instantiated during board update
-    [SerializeField]
-    private AudioClip _sfxBurn;
-    [SerializeField]
-    private AudioClip _sfxFreeze;
+    private int _boardSize;
+    public Space _spacePrefab; // Space prefab to be instantiated during board creation
+    public GameObject _icePrefab; // Ice prefab to be instantiated during board update
+    public GameObject _firePrefab; // Fire prefab to be instantiated during board update
+    public AudioClip _sfxBurn;
+    public AudioClip _sfxFreeze;
 
     // Start is called before the first frame update - WORKING
     void Start()
     {
-        _gameManagerPrefab = GameObject.Find("GameManager").GetComponent<GameManager>();
-        _boardSize = _gameManagerPrefab.getBoardSize();
+        _boardSize = GameManager.instance.boardSize;
         createBoard();
     }
 
@@ -32,9 +25,9 @@ public class BoardManager : MonoBehaviour
     public void printBoard(int[,] board)
     {
         print("Printing the board...");
-        for (int i = 0; i < _boardSize; i++)
+        for (int i = 0; i < GameManager.instance.boardSize; i++)
         {
-            for (int j = 0; j < _boardSize; j++)
+            for (int j = 0; j < GameManager.instance.boardSize; j++)
             {
                 if(board[i,j] != 0)
                 {
@@ -58,13 +51,13 @@ public class BoardManager : MonoBehaviour
                 {
                     Space space = hit.collider.GetComponent<Space>();
                     if (!space.getMagic()){
-                        for (int i = 0; i < _boardSize; i++)
+                        for (int i = 0; i < GameManager.instance.boardSize; i++)
                         {
-                            for (int j = 0; j < _boardSize; j++)
+                            for (int j = 0; j < GameManager.instance.boardSize; j++)
                             {
                                 if(space == _board[i, j])
                                 {
-                                    return setMagic(i, j, _gameManagerPrefab.getPlayerMagic());
+                                    return setMagic(i, j, GameManager.instance.playerMagic);
                                 }
                             }
                         }
@@ -205,10 +198,5 @@ public class BoardManager : MonoBehaviour
             return true;
         }
         return false;
-    }
-
-    public int getMagic(int i, int j)
-    {
-        return _intBoard[i, j];
     }
 }

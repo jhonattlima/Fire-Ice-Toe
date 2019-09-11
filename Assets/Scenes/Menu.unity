@@ -2657,8 +2657,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burn: {fileID: 8300000, guid: ed61318d26e5b264f876128bee11ffee, type: 3}
   freeze: {fileID: 8300000, guid: 639ce18060d2be549ac513d9136b4689, type: 3}
-  buttonConfirmation: {fileID: 0}
-  buttonHighlight: {fileID: 0}
+  buttonConfirmation: {fileID: 8300000, guid: 76c7c1158ed8ba14dabdbd50e4deca00, type: 3}
+  buttonHighlight: {fileID: 8300000, guid: ba077cb4a99cf424bbf168cd291bcdb2, type: 3}
 --- !u!4 &1899544204
 Transform:
   m_ObjectHideFlags: 0
@@ -2776,9 +2776,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48285e2b2f7db94fba4850ad0aad071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 0}
+  board: {fileID: 8300000, guid: 8f2be071c1adb24449721233abd78b6e, type: 3}
   draw: {fileID: 8300000, guid: f6e9601b5bf3bc74bad4e0f81e76fd12, type: 3}
-  mainMenu: {fileID: 0}
+  mainMenu: {fileID: 8300000, guid: 5c386f6068ddbce4fa4ddbd8ad726cdf, type: 3}
   lose: {fileID: 8300000, guid: d7eedcf0cb0b91a48a96d2c09bf52d14, type: 3}
   win: {fileID: 8300000, guid: 43ea3c3b30ea73c4285f24d24cac539e, type: 3}
 --- !u!4 &2001378467

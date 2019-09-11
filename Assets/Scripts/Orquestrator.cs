@@ -7,22 +7,18 @@ public class Orquestrator : MonoBehaviour
 {
     // Variables
     private bool _turn;
-    [SerializeField]
-    private BoardManager _boardManagerPrefab;
-    [SerializeField]
-    private AIController _aiPrefab;
-    private GameManager _gameManagerPrefab;
+    public BoardManager boardManagerPrefab;
+    public AIController aiPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        _gameManagerPrefab = GameObject.Find("GameManager").GetComponent<GameManager>();
-        _turn = _gameManagerPrefab.getTurn();
-        Debug.Log("Orquestrator: Player magic is: " + _gameManagerPrefab.getPlayerMagic());
-        Debug.Log("Orquestrator: AI magic is: " + _gameManagerPrefab.getAIMagic());
-        Debug.Log("Orquestrator: Turn is: " + _gameManagerPrefab.getTurn());
-        Debug.Log("Orquestrator: BoardSize is: " + _gameManagerPrefab.getBoardSize());
-        Debug.Log("Orquestrator: Difficulty is: " + _gameManagerPrefab.getDifficulty());
+        _turn = GameManager.instance.turn;
+        Debug.Log("Orquestrator: Player magic is: " + GameManager.instance.playerMagic);
+        Debug.Log("Orquestrator: AI magic is: " + GameManager.instance.aiMagic);
+        Debug.Log("Orquestrator: Turn is: " + GameManager.instance.turn);
+        Debug.Log("Orquestrator: BoardSize is: " + GameManager.instance.boardSize);
+        Debug.Log("Orquestrator: Difficulty is: " + GameManager.instance.difficulty);
     }
 
     // Update is called once per frame - WORKING
@@ -35,19 +31,19 @@ public class Orquestrator : MonoBehaviour
     {
         if (_turn)
         { // Player turn = true
-            if (_boardManagerPrefab.getHit())
+            if (boardManagerPrefab.getHit())
             {
                 _turn = false;
             }
         }
         else
         {
-            if (_aiPrefab.play())
+            if (aiPrefab.play())
             {
                 _turn = true;
             }
         }
-        if (_boardManagerPrefab.isGameOver(_boardManagerPrefab.getBoard()) != 0)
+        if (boardManagerPrefab.isGameOver(boardManagerPrefab.getBoard()) != 0)
         {
             GameOver();
         }
@@ -56,15 +52,15 @@ public class Orquestrator : MonoBehaviour
     // Calls Game over screen
     private void GameOver()
     {
-        if(_boardManagerPrefab.isGameOver(_boardManagerPrefab.getBoard()) == _gameManagerPrefab.getPlayerMagic())
+        if(boardManagerPrefab.isGameOver(boardManagerPrefab.getBoard()) == GameManager.instance.playerMagic)
         {
-            _gameManagerPrefab.setWinner("Player");
-        } else if(_boardManagerPrefab.isGameOver(_boardManagerPrefab.getBoard()) == _gameManagerPrefab.getAIMagic())
+            GameManager.instance.winner = "Player";
+        } else if(boardManagerPrefab.isGameOver(boardManagerPrefab.getBoard()) == GameManager.instance.aiMagic)
         {
-            _gameManagerPrefab.setWinner("AI");
+            GameManager.instance.winner = "AI";
         } else
         {
-            _gameManagerPrefab.setWinner("Draw");
+            GameManager.instance.winner = "Draw";
         }
         StartCoroutine(callScene());
     }

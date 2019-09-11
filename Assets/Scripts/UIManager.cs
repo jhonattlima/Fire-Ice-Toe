@@ -7,35 +7,31 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     // Variables
-    [SerializeField]
-    private GameObject _PanelMainMenu;
-    [SerializeField]
-    private GameObject _PanelMagicSelection;
-    [SerializeField]
-    private GameManager _gameManagerPrefab;
+    public GameObject _PanelMainMenu;
+    public GameObject _PanelMagicSelection;
 
     public void buttonEvent(Button button)
     {
         switch(button.name){
             case "Button_newGame":
                 _PanelMainMenu.SetActive(false);
-                _gameManagerPrefab.setDifficulty("Easy");
+                GameManager.instance.difficulty = "Easy";
                 _PanelMagicSelection.SetActive(true);
                 break;
             case "Button_newGame2":
                 _PanelMainMenu.SetActive(false);
-                _gameManagerPrefab.setDifficulty("Impossible");
+                GameManager.instance.difficulty = "Impossible";
                 _PanelMagicSelection.SetActive(true);
                 break;
             case "Button_quit":
                 Application.Quit();
                 break;
             case "Button_fireMage":
-                _gameManagerPrefab.setPlayerMagic(1);
+                GameManager.instance.setPlayerMagic(1);
                 StartCoroutine(callScene());
                 break;
             case "Button_iceMage":
-                _gameManagerPrefab.setPlayerMagic(2);
+                GameManager.instance.setPlayerMagic(2);
                 StartCoroutine(callScene());
                 break;
         }
@@ -45,8 +41,7 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         bool turn = (Random.value > 0.5f);
-        _gameManagerPrefab.setTurn(turn); 
-        _gameManagerPrefab.setBoardSize(3); // Future?
-        SceneManager.LoadScene("Board 3x3", LoadSceneMode.Single);
+        GameManager.instance.turn = turn;
+        SceneController.instance.changeScene(GameManager.instance.sceneBoard);
     }
 }

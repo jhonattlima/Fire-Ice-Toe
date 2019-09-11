@@ -36,19 +36,19 @@ public class MusicPlayer : MonoBehaviour
     {
         switch (clip)
         {
-            case "board":
+            case "musicBoard":
                 chosen_clip = board;
                 break;
-            case "draw":
-                chosen_clip = draw;
-                break;
-            case "mainMenu":
+            case "musicMainMenu":
                 chosen_clip = mainMenu;
                 break;
-            case "lose":
+            case "musicDraw":
+                chosen_clip = draw;
+                break;
+            case "musicLoser":
                 chosen_clip = lose;
                 break;
-            case "win":
+            case "musicWinner":
                 chosen_clip = win;
                 break;
         }
