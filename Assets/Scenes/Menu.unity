@@ -1275,6 +1275,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 11500000, guid: cc36050a77e680e449cb4d93978c7f0e, type: 3}
+        m_MethodName: set_name
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &767940072
@@ -1848,18 +1859,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121913232}
   m_CullTransparentMesh: 0
---- !u!114 &1124091454 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3256593373064244560, guid: ee76891378034b940bb17c4cbec1a27f,
-    type: 3}
-  m_PrefabInstance: {fileID: 691806412}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05824a174c6305741b47bb683eb332c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1213737348
 GameObject:
   m_ObjectHideFlags: 0
@@ -2515,7 +2514,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PanelMainMenu: {fileID: 109431092}
   _PanelMagicSelection: {fileID: 1362486675}
-  _gameManagerPrefab: {fileID: 1124091454}
 --- !u!4 &1715244854
 Transform:
   m_ObjectHideFlags: 0
@@ -2776,7 +2774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48285e2b2f7db94fba4850ad0aad071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 8300000, guid: 8f2be071c1adb24449721233abd78b6e, type: 3}
+  board: {fileID: 8300000, guid: eda504f9d7313474ba24c2de8c251bfc, type: 3}
   draw: {fileID: 8300000, guid: f6e9601b5bf3bc74bad4e0f81e76fd12, type: 3}
   mainMenu: {fileID: 8300000, guid: 5c386f6068ddbce4fa4ddbd8ad726cdf, type: 3}
   lose: {fileID: 8300000, guid: d7eedcf0cb0b91a48a96d2c09bf52d14, type: 3}
