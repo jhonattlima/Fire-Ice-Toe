@@ -30,7 +30,8 @@ public class SFXPlayer : MonoBehaviour
     // a ?? b -> a != null ? a : b
     private void Start()
     {
-        _audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
+
+        _audioSource = GetComponent<AudioSource>()  ?? gameObject.AddComponent<AudioSource>();
     }
 
     public void Play(string clip)

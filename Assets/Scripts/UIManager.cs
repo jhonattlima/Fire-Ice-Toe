@@ -13,24 +13,24 @@ public class UIManager : MonoBehaviour
     public void buttonEvent(Button button)
     {
         switch(button.name){
-            case "Button_newGame":
+            case "ButtonEasyMode":
                 _PanelMainMenu.SetActive(false);
                 GameManager.instance.difficulty = "Easy";
                 _PanelMagicSelection.SetActive(true);
                 break;
-            case "Button_newGame2":
+            case "ButtonHardMode":
                 _PanelMainMenu.SetActive(false);
                 GameManager.instance.difficulty = "Impossible";
                 _PanelMagicSelection.SetActive(true);
                 break;
-            case "Button_quit":
+            case "ButtonQuit":
                 Application.Quit();
                 break;
-            case "Button_fireMage":
+            case "ButtonFireMage":
                 GameManager.instance.setPlayerMagic(1);
                 StartCoroutine(callScene());
                 break;
-            case "Button_iceMage":
+            case "ButtonIceMage":
                 GameManager.instance.setPlayerMagic(2);
                 StartCoroutine(callScene());
                 break;
