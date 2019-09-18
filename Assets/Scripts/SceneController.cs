@@ -23,16 +23,16 @@ public class SceneController : MonoBehaviour
     {
         switch (sceneName)
         {
-            case "sceneBoard":
+            case "Board 3x3":
                 SceneManager.LoadScene(GameManager.instance.sceneBoard, LoadSceneMode.Single);
                 break;
-            case "sceneGameOver":
-                SceneManager.LoadScene(GameManager.instance.sceneGameOver, LoadSceneMode.Single);
-                break;
-            case "sceneMainMenu":
+            case "Menu":
                 SceneManager.LoadScene(GameManager.instance.sceneMainMenu, LoadSceneMode.Single);
                 break;
-            case "quit":
+            case "Game Over":
+                SceneManager.LoadScene(GameManager.instance.sceneGameOver, LoadSceneMode.Single);
+                break;
+            case "Quit":
                 Application.Quit();
                 break;
         }

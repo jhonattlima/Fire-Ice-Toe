@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     public string sceneBoard = "Board 3x3";
     public string sceneMainMenu = "Menu";
     public string sceneGameOver = "Game Over";
+    public string quitGame = "Quit";
+    //public string diffEasy = "Easy";
+    //public string diffHard = "Impossible";
     public bool turn;
 
     private void Awake()

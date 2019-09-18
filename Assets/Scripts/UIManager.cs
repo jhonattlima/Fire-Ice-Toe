@@ -10,27 +10,27 @@ public class UIManager : MonoBehaviour
     public GameObject _PanelMainMenu;
     public GameObject _PanelMagicSelection;
 
-    public void buttonEvent(Button button)
+    public void buttonEvent(string button)
     {
-        switch(button.name){
-            case "ButtonEasyMode":
+        switch(button){
+            case "easy":
                 _PanelMainMenu.SetActive(false);
                 GameManager.instance.difficulty = "Easy";
                 _PanelMagicSelection.SetActive(true);
                 break;
-            case "ButtonHardMode":
+            case "hard":
                 _PanelMainMenu.SetActive(false);
                 GameManager.instance.difficulty = "Impossible";
                 _PanelMagicSelection.SetActive(true);
                 break;
-            case "ButtonQuit":
+            case "quit":
                 Application.Quit();
                 break;
-            case "ButtonFireMage":
+            case "fire":
                 GameManager.instance.setPlayerMagic(1);
                 StartCoroutine(callScene());
                 break;
-            case "ButtonIceMage":
+            case "ice":
                 GameManager.instance.setPlayerMagic(2);
                 StartCoroutine(callScene());
                 break;
@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator callScene()
     {
+        Debug.Log("Tried here");
         yield return new WaitForSeconds(1);
         bool turn = (Random.value > 0.5f);
         GameManager.instance.turn = turn;
