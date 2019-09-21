@@ -11,8 +11,6 @@ public class BoardManager : MonoBehaviour
     public Space _spacePrefab; // Space prefab to be instantiated during board creation
     public GameObject _icePrefab; // Ice prefab to be instantiated during board update
     public GameObject _firePrefab; // Fire prefab to be instantiated during board update
-    public AudioClip _sfxBurn;
-    public AudioClip _sfxFreeze;
 
     // Start is called before the first frame update - WORKING
     void Start()
@@ -44,7 +42,6 @@ public class BoardManager : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.transform.tag == "Space")
@@ -68,27 +65,19 @@ public class BoardManager : MonoBehaviour
         return false;
     }
 
-
     // Create the board - WORKING
     private void createBoard()
     {
         _board = new Space[_boardSize, _boardSize];
         _intBoard = new int[_boardSize, _boardSize];
-        float x, y = 1.5f , z;
-
         // Create a board for elements and one for tracking
         for (int i = 0; i < _boardSize; i++)
         {
             for (int j = 0; j < _boardSize; j++)
-            {
-                
-                //Define Z position
-                z = 3.5f * (i - 1);
-                // Define X position
-                x = 3.5f * (j - 1);
-                                
-                Space space = Instantiate(_spacePrefab, new Vector3(x, y, z), transform.rotation);
+            { 
+                Space space = Instantiate(_spacePrefab, Vector3.zero, transform.rotation);
                 space.transform.parent = this.transform;
+                space.transform.position = new Vector3(space.transform.position.x + 3.5f * (i - 1), space.transform.position.y + 3.5f * (j - 1), space.transform.position.z);
                 _board[i, j] = space;
                 _intBoard[i, j] = 0; // 0 means for empty
             }
@@ -183,7 +172,7 @@ public class BoardManager : MonoBehaviour
         if(magic == 1)
         {
             Space space = _board[i, j];
-            AudioSource.PlayClipAtPoint(_sfxBurn, space.transform.position);
+            SFXPlayer.instance.Play(GameManager.instance.SFXFire);
             GameObject fire = Instantiate(_firePrefab, space.transform);
             space.setMagic(fire);
             _intBoard[i, j] = 1;
@@ -191,7 +180,7 @@ public class BoardManager : MonoBehaviour
         } else if (magic == 2)
         {
             Space space = _board[i, j];
-            AudioSource.PlayClipAtPoint(_sfxFreeze, space.transform.position);
+            SFXPlayer.instance.Play(GameManager.instance.SFXIce);
             GameObject ice = Instantiate(_icePrefab, space.transform);
             space.setMagic(ice);
             _intBoard[i, j] = 2;

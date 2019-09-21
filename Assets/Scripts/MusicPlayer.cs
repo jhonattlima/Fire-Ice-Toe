@@ -29,11 +29,12 @@ public class MusicPlayer : MonoBehaviour
 
     private void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
     }
 
     public void Play(string clip)
     {
+        _audioSource.Stop();
         switch (clip)
         {
             case "musicBoard":
@@ -52,7 +53,7 @@ public class MusicPlayer : MonoBehaviour
                 chosen_clip = win;
                 break;
         }
-        _audioSource.pitch = Random.Range(0.9f, 1.1f);
+        //_audioSource.pitch = Random.Range(0.9f, 1.1f);
         _audioSource.PlayOneShot(chosen_clip);
     }
 }

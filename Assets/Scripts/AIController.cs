@@ -7,10 +7,9 @@ public class AIController : MonoBehaviour
     // Variables
     public BoardManager _boardManagerPrefab; // Board manager imported to use methods
     private int line, column; // For use in minimax, getting the best line, column to move
-
     // AI play
     public bool play() {
-        if (GameManager.instance.Equals("Easy"))
+        if (GameManager.instance.difficulty.Equals("Easy"))
         {
             dummyPlay(_boardManagerPrefab.getBoard()); // Check the dummy play and do it
         } else
@@ -32,7 +31,7 @@ public class AIController : MonoBehaviour
             column = Random.Range(0, 3);
         }
         _boardManagerPrefab.setMagic(line, column, GameManager.instance.aiMagic); // AI plays in the defined line and column
-        Debug.Log("AI dummy played at line: " + line + " Column: " + column);
+        //Debug.Log("AI dummy played at line: " + line + " Column: " + column);
     }
 
     // Uses MinMax to detect best play
@@ -61,7 +60,7 @@ public class AIController : MonoBehaviour
             }
         }
         _boardManagerPrefab.setMagic(line, column, GameManager.instance.aiMagic); // AI plays in the defined line and column
-        Debug.Log("AI smartly played at line: " + line + " Column: " + column);
+        //Debug.Log("AI smartly played at line: " + line + " Column: " + column);
     }
 
     // MiniMax

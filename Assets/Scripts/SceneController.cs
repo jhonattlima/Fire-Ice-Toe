@@ -25,9 +25,11 @@ public class SceneController : MonoBehaviour
         {
             case "Board 3x3":
                 SceneManager.LoadScene(GameManager.instance.sceneBoard, LoadSceneMode.Single);
+                MusicPlayer.instance.Play(GameManager.instance.musicBoard);
                 break;
             case "Menu":
                 SceneManager.LoadScene(GameManager.instance.sceneMainMenu, LoadSceneMode.Single);
+                MusicPlayer.instance.Play(GameManager.instance.musicMainMenu);
                 break;
             case "Game Over":
                 SceneManager.LoadScene(GameManager.instance.sceneGameOver, LoadSceneMode.Single);

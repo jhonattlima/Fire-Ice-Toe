@@ -14,11 +14,11 @@ public class Orquestrator : MonoBehaviour
     void Start()
     {
         _turn = GameManager.instance.turn;
-        Debug.Log("Orquestrator: Player magic is: " + GameManager.instance.playerMagic);
-        Debug.Log("Orquestrator: AI magic is: " + GameManager.instance.aiMagic);
-        Debug.Log("Orquestrator: Turn is: " + GameManager.instance.turn);
-        Debug.Log("Orquestrator: BoardSize is: " + GameManager.instance.boardSize);
-        Debug.Log("Orquestrator: Difficulty is: " + GameManager.instance.difficulty);
+        //Debug.Log("Orquestrator: Player magic is: " + GameManager.instance.playerMagic);
+        //Debug.Log("Orquestrator: AI magic is: " + GameManager.instance.aiMagic);
+        //Debug.Log("Orquestrator: Turn is: " + GameManager.instance.turn);
+        //Debug.Log("Orquestrator: BoardSize is: " + GameManager.instance.boardSize);
+        //Debug.Log("Orquestrator: Difficulty is: " + GameManager.instance.difficulty);
     }
 
     // Update is called once per frame - WORKING
@@ -68,6 +68,6 @@ public class Orquestrator : MonoBehaviour
     IEnumerator callScene()
     {
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene("Game Over", LoadSceneMode.Single);
+        SceneController.instance.changeScene(GameManager.instance.sceneGameOver);
     }
 }

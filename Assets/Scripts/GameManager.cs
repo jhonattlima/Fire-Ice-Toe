@@ -13,17 +13,22 @@ public class GameManager : MonoBehaviour
     public int boardSize = 3; // 3
     public bool initialTurn; // true = player, false = AI
     public string winner; // Player 1, AI or Draw
-    public string musicBoard = "musicBoard";
-    public string musicMainMenu = "musicMainMenu";
-    public string musicDraw = "musicDraw";
-    public string musicWinner = "musicWinner";
-    public string musicLoser = "musicLoser";
-    public string SFXFire = "sfxFire";
-    public string SFXIce = "sfxIce";
-    public string sceneBoard = "Board 3x3";
-    public string sceneMainMenu = "Menu";
-    public string sceneGameOver = "Game Over";
-    public string quitGame = "Quit";
+    public readonly string musicBoard = "musicBoard";
+    public readonly string musicMainMenu = "musicMainMenu";
+    public readonly string musicDraw = "musicDraw";
+    public readonly string musicWinner = "musicWinner";
+    public readonly string musicLoser = "musicLoser";
+    public readonly string SFXFire = "sfxFire";
+    public readonly string SFXIce = "sfxIce";
+    public readonly string sceneBoard = "Board 3x3";
+    public readonly string sceneMainMenu = "Menu";
+    public readonly string sceneGameOver = "Game Over";
+    public readonly string quitGame = "Quit";
+    public readonly string buttonConfirmation = "buttonConfirmation";
+    public readonly string buttonHightlight = "buttonHighlight";
+    public readonly string charBurn = "burn";
+    public readonly string charFreeze = "freeze";
+
     //public string diffEasy = "Easy";
     //public string diffHard = "Impossible";
     public bool turn;

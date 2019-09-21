@@ -43,5 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c0e4cc0b923164085cc83b7fabf9fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManagerPrefab: {fileID: 0}
   _boardManagerPrefab: {fileID: 0}
