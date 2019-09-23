@@ -6,11 +6,21 @@ using UnityEngine.SceneManagement;
 public class Orquestrator : MonoBehaviour
 {
     // Variables
+    public static Orquestrator instance;
     private bool _turn;
-    public BoardManager boardManagerPrefab;
     public AIController aiPrefab;
 
-    // Start is called before the first frame update
+    void Awake(){
+                if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         _turn = GameManager.instance.turn;
@@ -24,14 +34,16 @@ public class Orquestrator : MonoBehaviour
     // Update is called once per frame - WORKING
     void Update()
     {
-        checkTurn();
+        if(GameManager.instance.mode.Equals("offline")){
+            checkTurn();
+        }
     }
 
     private void checkTurn()
     {
         if (_turn)
         { // Player turn = true
-            if (boardManagerPrefab.getHit())
+            if (BoardManager.instance.getHit())
             {
                 _turn = false;
             }
@@ -43,7 +55,7 @@ public class Orquestrator : MonoBehaviour
                 _turn = true;
             }
         }
-        if (boardManagerPrefab.isGameOver(boardManagerPrefab.getBoard()) != 0)
+        if (BoardManager.instance.isGameOver(BoardManager.instance.getBoard()) != 0)
         {
             GameOver();
         }
@@ -52,10 +64,10 @@ public class Orquestrator : MonoBehaviour
     // Calls Game over screen
     private void GameOver()
     {
-        if(boardManagerPrefab.isGameOver(boardManagerPrefab.getBoard()) == GameManager.instance.playerMagic)
+        if(BoardManager.instance.isGameOver(BoardManager.instance.getBoard()) == GameManager.instance.playerMagic)
         {
             GameManager.instance.winner = "Player";
-        } else if(boardManagerPrefab.isGameOver(boardManagerPrefab.getBoard()) == GameManager.instance.aiMagic)
+        } else if(BoardManager.instance.isGameOver(BoardManager.instance.getBoard()) == GameManager.instance.aiMagic)
         {
             GameManager.instance.winner = "AI";
         } else

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BoardManager : MonoBehaviour
 {
     // Variables 
+    public static BoardManager instance;
     private Space[,] _board; // Elements board
     private int[,] _intBoard; // Characters board for tracking
     private int _boardSize;
@@ -12,7 +13,16 @@ public class BoardManager : MonoBehaviour
     public GameObject _icePrefab; // Ice prefab to be instantiated during board update
     public GameObject _firePrefab; // Fire prefab to be instantiated during board update
 
-    // Start is called before the first frame update - WORKING
+    void Awake(){
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         _boardSize = GameManager.instance.boardSize;

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public int playerMagic; // 1 = fire, 2= ice
     public int aiMagic; // !playerMagic
     public string difficulty; // Easy, Impossible
+    public string mode = "offline"; //Offline, multiplayer
     public int boardSize = 3; // 3
     public bool initialTurn; // true = player, false = AI
     public string winner; // Player 1, AI or Draw
