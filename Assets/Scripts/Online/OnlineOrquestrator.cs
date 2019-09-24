@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class OnlineOrquestrator
 {
-    // VARIABLES
+   /* // VARIABLES
     // List of players (max 2)
     // ====================================== Check with teacher how this will be syncronized
     private static List<OnlinePlayerController> _playerList = new List<OnlinePlayerController>();
@@ -47,5 +47,5 @@ public static class OnlineOrquestrator
 
     private static void randomTurn(){
         playerTurn = Random.Range(1, 2);
-    }
+    }*/
 }

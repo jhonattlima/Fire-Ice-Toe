@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class OnlinePlayerController : NetworkBehaviour
 {
-    // Variables
+   /* // Variables
     public int playerMagic;
     public int playerNumber; // If it is player 1 or 2
 
@@ -41,5 +41,5 @@ public class OnlinePlayerController : NetworkBehaviour
     private void updateBoard(BoardManager board){
         // Get updated board
         // Check if game ended, disconnecting and prompting the correct screen
-    }
+    }*/
 }
