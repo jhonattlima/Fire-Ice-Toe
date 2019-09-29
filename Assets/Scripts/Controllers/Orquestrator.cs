@@ -34,7 +34,7 @@ public class Orquestrator : MonoBehaviour
     // Update is called once per frame - WORKING
     void Update()
     {
-        if(GameManager.instance.mode.Equals("offline")){
+        if(!GameManager.instance.multiplayerMode){
             checkTurn();
         }
     }

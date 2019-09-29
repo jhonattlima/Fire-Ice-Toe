@@ -43,5 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa3580c957fef3408565a11906183b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _PanelMainMenu: {fileID: 0}
-  _PanelMagicSelection: {fileID: 0}
+  PanelMainMenu: {fileID: 0}
+  PanelMagicSelection: {fileID: 0}
+  PanelLocalMatches: {fileID: 0}
+  PanelOnlineMatches: {fileID: 0}
+  ButtonMatchPrefab: {fileID: 1083528147381270805, guid: 12b6464c3ab795f4ba028bc0c02f31c5,
+    type: 3}
+  ButtonListLan: {fileID: 0}
+  ButtonListOnline: {fileID: 0}
