@@ -8,8 +8,8 @@ using UnityEngine.Networking.Match;
 public class NetworkController : NetworkManager
 {
     // Variables
-    public static event Action<NetworkConnection> onlineConection; // For online connections
-    public static event Action<NetworkConnection> lanConnection; // For Lan connections
+    public static event Action<NetworkConnection> onServerConnect;
+    public static event Action<NetworkConnection> onClientConnect;
 
     // Return Network Discovery component
     public static NetworkDiscovery Discovery{
@@ -30,7 +30,7 @@ public class NetworkController : NetworkManager
         base.OnServerConnect(conn);
         if(!conn.address.Equals("localClient")){
             Debug.Log("Client has connected to Server! " +conn.address);
-            onlineConection?.Invoke(conn);
+            onServerConnect?.Invoke(conn);
         }
     }
 
@@ -39,7 +39,7 @@ public class NetworkController : NetworkManager
         base.OnClientConnect(conn);
         if(!conn.address.Equals("localServer")){
             Debug.Log("Client has connected to Lan! " +conn.address);
-            lanConnection?.Invoke(conn);
+            onClientConnect?.Invoke(conn);
         }
     }
 

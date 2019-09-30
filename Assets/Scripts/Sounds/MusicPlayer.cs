@@ -25,10 +25,6 @@ public class MusicPlayer : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(this);
-    }
-
-    private void Start()
-    {
         _audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
     }
 
