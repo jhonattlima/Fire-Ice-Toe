@@ -4540,7 +4540,7 @@ GameObject:
   - component: {fileID: 1405311945}
   - component: {fileID: 1405311944}
   m_Layer: 0
-  m_Name: NetworkController
+  m_Name: Lancontroller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4555,7 +4555,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1405311943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1553936188, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 266cf65a7ff64f64a8b3c159cb9c1bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_BroadcastPort: 47777
@@ -4565,7 +4565,7 @@ MonoBehaviour:
   m_BroadcastInterval: 1000
   m_UseNetworkManager: 0
   m_BroadcastData: HELLO
-  m_ShowGUI: 1
+  m_ShowGUI: 0
   m_OffsetX: 0
   m_OffsetY: 0
 --- !u!114 &1405311945
@@ -6893,6 +6893,11 @@ PrefabInstance:
       propertyPath: panelWaitingPlayers
       value: 
       objectReference: {fileID: 106619108}
+    - target: {fileID: 6474699583300741460, guid: 82e8f49cd2f18cf4188684ffd67cbd68,
+        type: 3}
+      propertyPath: lanDiscovery
+      value: 
+      objectReference: {fileID: 1405311944}
     - target: {fileID: 6474699583300741463, guid: 82e8f49cd2f18cf4188684ffd67cbd68,
         type: 3}
       propertyPath: m_LocalPosition.x

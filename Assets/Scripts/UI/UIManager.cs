@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         MusicPlayer.instance.Play(GameManager.instance.musicMainMenu);
-        lanController =  gameObject.AddComponent(typeof (LanController)) as LanController;
+        //lanController =  gameObject.AddComponent(typeof (LanController)) as LanController;
         //string[] names = {"name1", "name2", "name3"};
         //updateMatchesList(names);
         //lanDiscovery = new LanDiscovery();
@@ -83,8 +83,8 @@ public class UIManager : MonoBehaviour
                 GameManager.instance.lanMode = true;
                 panelMainMenu.SetActive(false);
                 panelLocalMatches.SetActive(true);
-                lanController.startController();
-                //lanDiscovery.listenMatches();
+                //lanController.startController();
+                lanDiscovery.listenMatches();
                 startButtonsList();
                 break;
             case "online":
@@ -99,8 +99,8 @@ public class UIManager : MonoBehaviour
                         if(string.IsNullOrEmpty(lanInputField.text)){
                             Debug.Log("Insert match name!");
                         } else {
-                            lanController.CreateMatch(lanInputField.text);
-                            //lanDiscovery.createMatch(lanInputField.text);
+                            //lanController.CreateMatch(lanInputField.text);
+                            lanDiscovery.createMatch(lanInputField.text);
                             panelLocalMatches.SetActive(false);
                             panelWaitingPlayers.SetActive(true);
                         }
@@ -118,9 +118,10 @@ public class UIManager : MonoBehaviour
 
     private void returnToLobby(){
         buttons.Clear();
+        lanDiscovery.StopBroadcast();
         GameManager.instance.multiplayerMode = false;
         panelLocalMatches.SetActive(false);
-        lanController?.stopController();
+        //lanController?.stopController();
         Destroy(lanController);
         panelOnlineMatches.SetActive(false);
         Destroy(onlineController);
@@ -152,16 +153,34 @@ public class UIManager : MonoBehaviour
     //     }
     // }
 
+    // public void updateMatchesList(List<StoredData> storedDatas){
+    //     int counter = 0;
+    //     foreach(StoredData data in storedDatas){
+    //         if(counter < GameManager.instance.maxMatches){
+    //             buttons[counter].gameObject.GetComponentInChildren<Text>().text = data.data;
+    //             buttons[counter].gameObject.GetComponent<ButtonMatchController>().data = data;
+    //             buttons[counter].gameObject.SetActive(true);
+    //             counter ++;
+    //         }
+    //     }
+    //     while(counter < GameManager.instance.maxMatches){
+    //         buttons[counter].gameObject.SetActive(false);
+    //         counter ++;
+    //     }
+    // }
     
-    public void updateMatchesList(Dictionary<NetworkBroadcastResult, float> activeMatches){
+    public void updateMatchesList(Dictionary<ConnInfo, float> activeMatches){
         int counter = 0;  
         var keys = activeMatches.Keys.ToList();
-        foreach(var match in keys){
-            buttons[counter].gameObject.GetComponentInChildren<Text>().text = Encoding.Unicode.GetString(match.broadcastData);
-            buttons[counter].gameObject.GetComponent<ButtonMatchController>().matchName = Encoding.Unicode.GetString(match.broadcastData);
-            buttons[counter].gameObject.GetComponent<ButtonMatchController>().index = counter;
-            buttons[counter].gameObject.SetActive(true);
-            counter ++;
+        foreach(var match in keys)
+        {
+            if(counter < GameManager.instance.maxMatches){
+                buttons[counter].gameObject.GetComponentInChildren<Text>().text = match.name;
+                //buttons[counter].gameObject.GetComponent<ButtonMatchController>().matchName = Encoding.Unicode.GetString(match.broadcastData);
+                //buttons[counter].gameObject.GetComponent<ButtonMatchController>().index = counter;
+                buttons[counter].gameObject.SetActive(true);
+                counter ++;
+            }
         }
         while(counter <GameManager.instance.maxMatches){
             buttons[counter].gameObject.SetActive(false);
@@ -169,18 +188,18 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void updateMatchesList(string[] _matchNames){  
-        for(int i =0; i<_matchNames.Length; i++){
-            if(_matchNames[i] != null){
-                buttons[i].gameObject.GetComponentInChildren<Text>().text = _matchNames[i];
-                buttons[i].gameObject.GetComponent<ButtonMatchController>().matchName = _matchNames[i];
-                buttons[i].gameObject.GetComponent<ButtonMatchController>().index = i;
-                buttons[i].gameObject.SetActive(true);
-            } else {
-                buttons[i].gameObject.SetActive(false);
-            }
-        }
-    }
+    // public void updateMatchesList(string[] _matchNames){  
+    //     for(int i =0; i<_matchNames.Length; i++){
+    //         if(_matchNames[i] != null){
+    //             buttons[i].gameObject.GetComponentInChildren<Text>().text = _matchNames[i];
+    //             buttons[i].gameObject.GetComponent<ButtonMatchController>().matchName = _matchNames[i];
+    //             buttons[i].gameObject.GetComponent<ButtonMatchController>().index = i;
+    //             buttons[i].gameObject.SetActive(true);
+    //         } else {
+    //             buttons[i].gameObject.SetActive(false);
+    //         }
+    //     }
+    // }
 
     IEnumerator callScene()
     {
