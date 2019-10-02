@@ -12,7 +12,10 @@ public class UIManager : MonoBehaviour
     // General
     public static UIManager instance;
     public GameObject panelMainMenu;
+    public GameObject panelGameMode;
+    public GameObject panelOptions;
     public GameObject panelMagicSelection;
+    public GameObject panelPvp;
     public GameObject panelWaitingPlayers;
     public Button buttonMatchPrefab;
     private List<Button> buttons = new List<Button>();
@@ -53,6 +56,16 @@ public class UIManager : MonoBehaviour
     public void buttonEvent(string button)
     {
         switch(button){
+            case "play":
+                panelMainMenu.SetActive(false);
+                SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
+                panelGameMode.SetActive(true);
+                break;
+            case "options":
+                panelMainMenu.SetActive(false);
+                SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
+                panelOptions.SetActive(true);
+                break;
             case "easy":
                 panelMainMenu.SetActive(false);
                 GameManager.instance.difficulty = "Easy";
@@ -64,6 +77,26 @@ public class UIManager : MonoBehaviour
                 GameManager.instance.difficulty = "Impossible";
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
                 panelMagicSelection.SetActive(true);
+                break;
+            case "pvp":
+                panelGameMode.SetActive(false);
+                SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
+                panelPvp.SetActive(true);
+                break;
+            case "ModeBack":
+                panelGameMode.SetActive(false);
+                SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
+                panelMainMenu.SetActive(true);
+                break;
+            case "OptionsBack":
+                panelOptions.SetActive(false);
+                SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
+                panelMainMenu.SetActive(true);
+                break;
+            case "PvpBack":
+                panelPvp.SetActive(false);
+                SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
+                panelGameMode.SetActive(true);
                 break;
             case "quit":
                 Application.Quit();
