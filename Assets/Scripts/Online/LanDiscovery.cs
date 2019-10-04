@@ -5,11 +5,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
 
-public class StoredData {
+// Class used to organize broadcast data
+public class StoredData{
+    public string fromAddress;
     public string id;
     public string data;
     public float expiration;
-    public StoredData(string id, string data, float expiration){
+    public StoredData(string fromAddress, string id, string data, float expiration){
+        this.fromAddress = fromAddress;
         this.id = id;
         this.data = data;
         this.expiration = expiration;
@@ -18,73 +21,68 @@ public class StoredData {
 
 public class LanDiscovery : NetworkDiscovery
 {
+    // Variables
     private float refreshTime = 1f;
-    private Dictionary<ConnInfo, float> connectionInfos = new Dictionary<ConnInfo, float>();
+    private StoredData[] storedDatas;
 
-    // Start is called before the first frame updat
-    private void Awake()
-    {
+    void Start(){
+        storedDatas = new StoredData[GameManager.instance.maxMatches];
         StartCoroutine(cleanOldSRegisters());
     }
 
+    // Start listening matches
     public void listenMatches(){
         base.Initialize();
         base.StartAsClient();
     }
 
-    public override void OnReceivedBroadcast(string fromAddress, string data)
-    {
-        bool changed = false;
-        Debug.Log("received a new broadcast");
-        base.OnReceivedBroadcast(fromAddress, data);
-        string[] splitData = data.Split('/');
-        if(data[0].Equals("fireicetoe")){
-            ConnInfo info = new ConnInfo(fromAddress, splitData[1], splitData[splitData.Length-1]);
-            if(!connectionInfos.ContainsKey(info)){
-                Debug.Log("enteredHere");
-                connectionInfos.Add(info, Time.time + refreshTime);
-                changed = true;
-            } else {
-                connectionInfos[info] = Time.time + refreshTime;
-            }
-            if(changed) UIManager.instance.updateMatchesList(connectionInfos);
-        }
-    }
-
+    // Create a new match
     public void createMatch(string name){
         StopBroadcast();
         base.Initialize();
         base.broadcastData = "fireicetoe/" + name + "/" + Random.Range(1, 10000);
         base.StartAsServer();
+        Debug.Log("Lan Discovery says: Starting sending broadcast " + broadcastData);
     }
 
+    // Handle the received matches
+    public override void OnReceivedBroadcast(string fromAddress, string data)
+    {
+        Debug.Log("Lan Discovery says: Received a new broadcast: " + data);
+        base.OnReceivedBroadcast(fromAddress, data);
+        bool changed = false;
+        string[] splitData = data.Split('/');
+        if(splitData[0].Equals("fireicetoe")){
+            StoredData info = new StoredData(fromAddress, splitData[splitData.Length-1],  splitData[1], Time.time + refreshTime);
+            
+            for(int i =0; i < GameManager.instance.maxMatches; i++){
+                if(storedDatas[i] != null && storedDatas[i].id.Equals(info.id)){
+                    storedDatas[i].expiration = Time.time+refreshTime;
+                    break;
+                }
+                else if(storedDatas[i] == null){
+                    storedDatas[i] = info;
+                    changed = true;
+                    break;
+                }
+            }
+            if(changed) UIManager.instance.updateMatchesList(storedDatas);
+        }
+    }
+
+    // Loop routine to clean old rooms that might not be available anymore
     private IEnumerator cleanOldSRegisters(){
         while(true)
         {
-            Debug.Log("Entered here");
             bool changed = false;
-            var keys = connectionInfos.Keys.ToList();
-            if(keys != null){
-                foreach(var key in keys){
-                    if(connectionInfos[key] <= Time.time){
-                        connectionInfos.Remove(key);
-                        changed = true;
-                    }
+            for (int i = 0; i<GameManager.instance.maxMatches; i++){
+                if(storedDatas[i] != null && storedDatas[i].expiration <= Time.time){
+                    storedDatas[i] = null;
+                    changed = true;
                 }
             }
-            if(changed) UIManager.instance.updateMatchesList(connectionInfos);
+            if(changed) UIManager.instance.updateMatchesList(storedDatas);
             yield return new WaitForSeconds(refreshTime);
         }
-    }
-}
-
-public struct ConnInfo{
-    public string address;
-    public string name;
-    public string id;
-    public ConnInfo(string fromAddress, string name, string id){
-        this.address = fromAddress;
-        this.name = name;
-        this.id = id;
     }
 }
