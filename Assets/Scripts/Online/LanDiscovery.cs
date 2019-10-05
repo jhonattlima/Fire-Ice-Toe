@@ -37,11 +37,13 @@ public class LanDiscovery : NetworkDiscovery
     }
 
     // Create a new match
-    public void createMatch(string name){
+    public void createMatch(string name) {
         StopBroadcast();
-        base.Initialize();
+        
         base.broadcastData = "fireicetoe/" + name + "/" + Random.Range(1, 10000);
-        base.StartAsServer();
+        StartAsServer();
+
+        NetworkController.singleton.StartHost();
         Debug.Log("Lan Discovery says: Starting sending broadcast " + broadcastData);
     }
 
@@ -50,11 +52,12 @@ public class LanDiscovery : NetworkDiscovery
     {
         Debug.Log("Lan Discovery says: Received a new broadcast: " + data);
         base.OnReceivedBroadcast(fromAddress, data);
+        Debug.LogError(fromAddress);
+        if(!fromAddress.Contains("10.")) return;
         bool changed = false;
         string[] splitData = data.Split('/');
         if(splitData[0].Equals("fireicetoe")){
             StoredData info = new StoredData(fromAddress, splitData[splitData.Length-1],  splitData[1], Time.time + refreshTime);
-            
             for(int i =0; i < GameManager.instance.maxMatches; i++){
                 if(storedDatas[i] != null && storedDatas[i].id.Equals(info.id)){
                     storedDatas[i].expiration = Time.time+refreshTime;

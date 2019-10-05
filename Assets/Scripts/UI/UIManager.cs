@@ -169,9 +169,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void enterOnMatch(ButtonMatchController button){
+        lanDiscovery.StopBroadcast();
+        
+        NetworkController.singleton.networkAddress = button.data.fromAddress;
+        NetworkController.singleton.StartClient();
+    }
+
     private void returnToLobby(){
         buttons.Clear();
         lanDiscovery.StopBroadcast();
+        NetworkController.singleton.StopHost();
         GameManager.instance.multiplayerMode = false;
 
         panelWaitingPlayers.SetActive(false);
