@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class BoardManager : MonoBehaviour
     public Space _spacePrefab; // Space prefab to be instantiated during board creation
     public GameObject _icePrefab; // Ice prefab to be instantiated during board update
     public GameObject _firePrefab; // Fire prefab to be instantiated during board update
-    public int[] lastMovementSet = new int[3];
+    public int[] lastMovementSet = new int[3]; // First = row, Second = column, Third = playerMagic;
+    public Text textTurn;
 
     void Awake(){
         if (instance == null)

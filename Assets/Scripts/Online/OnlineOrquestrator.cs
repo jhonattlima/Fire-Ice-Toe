@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public static class OnlineOrquestrator
 {
@@ -11,27 +12,33 @@ public static class OnlineOrquestrator
 
     public static void addPlayer(OnlinePlayerController player){
         _playerList.Add(player);
+        Debug.Log("OnlineOrquestrator.addPlayer: New player added to Orquestrator.");
+        Debug.Log("number odf players now: " + _playerList.Count);
     }
 
-    private static void startGame(int newplayerTurn){
-        // Define the second player magic
-        if(_playerList[0].playerMagic == 1){
-            _playerList[1].playerMagic = 2;
-        } else {
-            _playerList[1].playerMagic = 1;
-        }
+    public static void startGame(int newplayerTurn){
+        // Random turn
         playerTurn = newplayerTurn;
         // Start the game
         SceneController.instance.changeScene(GameManager.instance.sceneBoard);
+        foreach(OnlinePlayerController player in _playerList){
+            player.inGame = true;
+            //Debug.Log("OnlineOrquestrator.startGame: Changed player " +player.playerNumber+ " in game state to true.");
+        }
     }
 
     public static void changeTurn(int playerNumber){
-        if(playerTurn == 1) playerTurn = 2;
-        else playerTurn = 1;
+        if(playerTurn == 1){
+            playerTurn = 2;
+        } 
+        else{
+            playerTurn = 1;
+        } 
         _playerList[playerNumber-1].played = false;
-    }
+        Debug.Log("Changed turn to " + playerTurn);
+        Debug.Log("Changed player " + _playerList[playerNumber-1].playerNumber + " played value to false." );
 
-    private static void setTurn(int turn){
-        playerTurn = turn;
+        // Change Board panel text
+        BoardManager.instance.textTurn.text =  "Turn: Player " + playerTurn;
     }
 }

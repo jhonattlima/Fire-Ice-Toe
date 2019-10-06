@@ -25,22 +25,18 @@ public class NetworkController : NetworkManager
         }
     }
 
-    // Check if the connection type is online and address it to onlineConnection var if it is
     public override void OnServerConnect(NetworkConnection conn){
         base.OnServerConnect(conn);
         if(!conn.address.Equals("localClient")){
-            Debug.LogError("Client has connected to Server! " +conn.address);
             onServerConnect?.Invoke(conn);
             Discovery.StopBroadcast();
         }
-        Debug.LogError("Number of players: " + numPlayers);
+        //Debug.Log("Number of players: " + numPlayers);
     }
 
-    // Check if the connection type is lan and address it to lanConnection var if it is
     public override void OnClientConnect(NetworkConnection conn){
         base.OnClientConnect(conn);
         if(!conn.address.Equals("localServer")){
-            Debug.Log("Client has connected to Lan! " +conn.address);
             onClientConnect?.Invoke(conn);
         }
     }

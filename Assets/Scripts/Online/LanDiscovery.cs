@@ -27,11 +27,11 @@ public class LanDiscovery : NetworkDiscovery
 
     void Start(){
         storedDatas = new StoredData[GameManager.instance.maxMatches];
-        StartCoroutine(cleanOldSRegisters());
     }
 
     // Start listening matches
     public void listenMatches(){
+        StartCoroutine(cleanOldSRegisters());
         base.Initialize();
         base.StartAsClient();
     }
@@ -50,10 +50,10 @@ public class LanDiscovery : NetworkDiscovery
     // Handle the received matches
     public override void OnReceivedBroadcast(string fromAddress, string data)
     {
-        Debug.Log("Lan Discovery says: Received a new broadcast: " + data);
+        //Debug.Log("Lan Discovery says: Received a new broadcast: " + data);
         base.OnReceivedBroadcast(fromAddress, data);
-        Debug.LogError(fromAddress);
-        if(!fromAddress.Contains("10.")) return;
+        //Debug.LogError(fromAddress);
+        //if(!fromAddress.Contains("10.")) return;
         bool changed = false;
         string[] splitData = data.Split('/');
         if(splitData[0].Equals("fireicetoe")){

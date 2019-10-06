@@ -139,7 +139,7 @@ public class UIManager : MonoBehaviour
             case "create":
                 if(GameManager.instance.multiplayerMode){
                     if(GameManager.instance.lanMode){
-                        // Check if lan textbox is empty
+                        // Check if textbox is empty
                         if(string.IsNullOrEmpty(lanInputField.text)){
                             panelLocalMatches.SetActive(false);
                             panelEmptyRoomName.SetActive(true);
@@ -171,7 +171,7 @@ public class UIManager : MonoBehaviour
 
     public void enterOnMatch(ButtonMatchController button){
         lanDiscovery.StopBroadcast();
-        
+        lanDiscovery.StopAllCoroutines();
         NetworkController.singleton.networkAddress = button.data.fromAddress;
         NetworkController.singleton.StartClient();
     }

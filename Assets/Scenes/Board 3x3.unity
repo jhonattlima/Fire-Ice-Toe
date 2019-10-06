@@ -426,6 +426,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 4140910631008182878, guid: cac7ba47f074c464c9499514c4c2998a,
+        type: 3}
+      propertyPath: textTurn
+      value: 
+      objectReference: {fileID: 258060929}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cac7ba47f074c464c9499514c4c2998a, type: 3}
 --- !u!1 &461594467
