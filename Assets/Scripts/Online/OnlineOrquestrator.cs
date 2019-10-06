@@ -7,35 +7,51 @@ public static class OnlineOrquestrator
 {
     // VARIABLES
     // List of players (max 2)
-    private static List<OnlinePlayerController> _playerList = new List<OnlinePlayerController>();
-    public static int playerTurn;
+    public static List<OnlinePlayerController> _playerList = new List<OnlinePlayerController>(); // ONLY SERVER WILL USE THIS
+    public static int lastTurn; // LAST TURN THAT MUST BE SYNCED IN ALL
 
-    public static void addPlayer(OnlinePlayerController player){
+    public static void addPlayer(OnlinePlayerController player){ // ONLY SERVER CALL THIS
         _playerList.Add(player);
         Debug.Log("OnlineOrquestrator.addPlayer: New player added to Orquestrator.");
         Debug.Log("number odf players now: " + _playerList.Count);
     }
 
-    public static void startGame(int newplayerTurn){
+    public static void startGame(int getlastTurn, bool isServer){
         // Random turn
-        playerTurn = newplayerTurn;
+        lastTurn = getlastTurn;
         // Start the game
         SceneController.instance.changeScene(GameManager.instance.sceneBoard);
-        foreach(OnlinePlayerController player in _playerList){
-            player.inGame = true;
-            //Debug.Log("OnlineOrquestrator.startGame: Changed player " +player.playerNumber+ " in game state to true.");
+        if(isServer){
+            foreach(var player in _playerList){
+                player.updateTurn(getlastTurn);
+            }
         }
     }
 
     public static void changeTurn(){
-        if(playerTurn == 1){
-            playerTurn = 2;
+        if(lastTurn == 1){
+            lastTurn = 2;
         } 
         else{
-            playerTurn = 1;
+            lastTurn = 1;
         } 
-        Debug.Log("Changed turn to " + playerTurn);
+        Debug.Log("Last turn: Player " + lastTurn);
         // Change Board panel text
-        BoardManager.instance.textTurn.text =  "Turn: Player " + playerTurn;
+        BoardManager.instance.textTurn.text =  "Turn: Player " + lastTurn;
+    }
+
+    public static void setPlay(int xpos, int ypos, int playerMagic, bool isServer){
+        BoardManager.instance.setMagic(xpos, ypos, playerMagic);
+        changeTurn();
+        if(isServer){
+            foreach(var player in _playerList){
+                player.castMagic(xpos, ypos, playerMagic, lastTurn);
+                player.updateTurn(lastTurn);
+            }
+        }
+    }
+
+    public static void endGame(){
+        // Close connections, destroy objects and return to lobby.
     }
 }

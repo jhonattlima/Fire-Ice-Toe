@@ -9,7 +9,7 @@ public class OnlinePlayerController : NetworkBehaviour
     public int playerMagic; // If it is fire or ice
     public int playerNumber; // If it is player 1 or 2
     public bool played = false;
-    public bool inGame = false;
+    public int lastPlayed = 0;
 
     private void Awake()
     {
@@ -17,56 +17,73 @@ public class OnlinePlayerController : NetworkBehaviour
     }
 
     void Start(){
-        if(isServer){
-            OnlineOrquestrator.addPlayer(this);
-        }
-        if(isLocalPlayer && isServer){ // Check if is the player that opened the room
-            this.playerMagic = GameManager.instance.playerMagic;
+        if(isServer && !isLocalPlayer || !isServer && isLocalPlayer){ // Check if is the player 2, on client's only machine (need to pass this info to server)
+            this.playerMagic = 2;
+            this.playerNumber = 2;
+        } else if (isServer && isLocalPlayer) {
+            this.playerMagic = 1;
             this.playerNumber = 1;
         }
-        else if (isLocalPlayer && !isServer){ // Check if is the player 2, on client's only machine
-            if(GameManager.instance.playerMagic == 1){
-                this.playerMagic = 2;
-            } else {
-                this.playerMagic = 1;
-            }
-            this.playerNumber = 2;
-            CmdStartgame();
+        if(isServer){
+            OnlineOrquestrator.addPlayer(this); // Only server will have the list of players
+        }
+        if(isLocalPlayer && !isServer){
+            CmdStartGame(Random.Range(1,2));
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(inGame){
-            if(!isLocalPlayer) return;
-            if(OnlineOrquestrator.playerTurn == this.playerNumber && !played){
-                if(BoardManager.instance.getHit()){
-                    played = true;
-                    CmdCastMagic(BoardManager.instance.lastMovementSet[0], BoardManager.instance.lastMovementSet[1], playerMagic);
-                }
+        if(!isLocalPlayer) return;
+        if((isServer && lastPlayed == 2) || (!isServer && lastPlayed == 1)){
+            if(BoardManager.instance.getHit()){
+                played = true;
+                CmdCastMagic(BoardManager.instance.lastMovementSet[0], BoardManager.instance.lastMovementSet[1], playerMagic);
             }
         }
     }
 
+    public void startGame(int turn){
+        RpcStartGame(turn);
+    } 
+
+    public void updateTurn(int turn){
+        RpcUpdateTurn(turn);
+    }
+
+    [ClientRpc]
+    private void RpcUpdateTurn(int turn){
+        if(!isLocalPlayer) return;
+        this.lastPlayed = turn;
+    }
+
     [Command]
-    public void CmdStartgame(){
-        RpcStartGame(Random.Range(1, 2));
+    private void CmdStartGame(int turn){
+        OnlineOrquestrator.startGame(turn, true);
     }
 
     [ClientRpc]
     private void RpcStartGame(int turn){
-        OnlineOrquestrator.startGame(turn);
-    }  
+        if(!isLocalPlayer) return;
+        OnlineOrquestrator.startGame(turn, false);
+    } 
+
+    // Method only called by OnlineOrquestrator in server
+    public void castMagic(int xpos, int ypos, int playerMagic, int lastPlayed){
+        RpcUpdateBoard(xpos, ypos, playerMagic, lastPlayed);
+    }
 
     [Command]
-    private void CmdCastMagic(int i, int j, int playerMagic){
-        RpcUpdateBoard(i, j, playerMagic);
+    private void CmdCastMagic(int xpos, int ypos, int playerMagic){
+        OnlineOrquestrator.setPlay(xpos, ypos, playerMagic, true);
     }
 
     [ClientRpc]
-    private void RpcUpdateBoard(int i, int j, int playerMagic){
-        BoardManager.instance.setMagic(i,j,playerMagic);
+    private void RpcUpdateBoard(int xpos, int ypos, int playerMagic, int lastPlayed){
+        if(!isLocalPlayer) return;
+        OnlineOrquestrator.setPlay(xpos, ypos, lastPlayed, false);
+        //BoardManager.instance.setMagic(i,j,playerMagic);
         // int result = BoardManager.instance.isGameOver(BoardManager.instance.getBoard());
         // if( result != 0){
         //     if(result == this.playerMagic){
@@ -77,17 +94,6 @@ public class OnlinePlayerController : NetworkBehaviour
         //         // Finish game and present lose screen
         //     }
         // }
-        OnlineOrquestrator.changeTurn();
         played = true;
     }  
-
-    // [Command]
-    // public void CmdAddPlayer(){
-    //     RpcAddPlayer(this);
-    // }
-
-    // [ClientRpc]
-    // private void RpcAddPlayer(OnlinePlayerController player){
-    //     OnlineOrquestrator.addPlayer(player);
-    // }
 }
