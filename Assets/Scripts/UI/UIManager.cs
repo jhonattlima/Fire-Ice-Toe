@@ -94,6 +94,11 @@ public class UIManager : MonoBehaviour
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
                 panelGameMode.SetActive(true);
                 break;
+            case "LocalBack":
+                panelLocalMatches.SetActive(false);
+                SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
+                panelPvp.SetActive(true);
+                break;
             case "quit":
                 Application.Quit();
                 break;
@@ -169,17 +174,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void enterOnMatch(ButtonMatchController button){
-        lanDiscovery.StopBroadcast();
-        
-        NetworkController.singleton.networkAddress = button.data.fromAddress;
-        NetworkController.singleton.StartClient();
-    }
-
     private void returnToLobby(){
         buttons.Clear();
         lanDiscovery.StopBroadcast();
-        NetworkController.singleton.StopHost();
         GameManager.instance.multiplayerMode = false;
 
         panelWaitingPlayers.SetActive(false);
