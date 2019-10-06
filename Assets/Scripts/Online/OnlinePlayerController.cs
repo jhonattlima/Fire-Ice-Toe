@@ -17,19 +17,20 @@ public class OnlinePlayerController : NetworkBehaviour
     }
 
     void Start(){
+        if(isServer){
+            OnlineOrquestrator.addPlayer(this);
+        }
         if(isLocalPlayer && isServer){ // Check if is the player that opened the room
             this.playerMagic = GameManager.instance.playerMagic;
             this.playerNumber = 1;
-            CmdAddPlayer();
         }
-        else if(isLocalPlayer && !isServer){ // Check if is the player 2, on client's only machine
+        else if (isLocalPlayer && !isServer){ // Check if is the player 2, on client's only machine
             if(GameManager.instance.playerMagic == 1){
                 this.playerMagic = 2;
             } else {
                 this.playerMagic = 1;
             }
             this.playerNumber = 2;
-            CmdAddPlayer();
             CmdStartgame();
         }
     }
@@ -49,14 +50,14 @@ public class OnlinePlayerController : NetworkBehaviour
     }
 
     [Command]
-    public void CmdAddPlayer(){
-        RpcAddPlayer();
+    public void CmdStartgame(){
+        RpcStartGame(Random.Range(1, 2));
     }
 
     [ClientRpc]
-    private void RpcAddPlayer(){
-        OnlineOrquestrator.addPlayer(this);
-    }
+    private void RpcStartGame(int turn){
+        OnlineOrquestrator.startGame(turn);
+    }  
 
     [Command]
     private void CmdCastMagic(int i, int j, int playerMagic){
@@ -76,16 +77,17 @@ public class OnlinePlayerController : NetworkBehaviour
         //         // Finish game and present lose screen
         //     }
         // }
-        OnlineOrquestrator.changeTurn(this.playerNumber);
-    }
+        OnlineOrquestrator.changeTurn();
+        played = true;
+    }  
 
-    [Command]
-    public void CmdStartgame(){
-        RpcStartGame(Random.Range(1, 2));
-    }
+    // [Command]
+    // public void CmdAddPlayer(){
+    //     RpcAddPlayer(this);
+    // }
 
-    [ClientRpc]
-    private void RpcStartGame(int turn){
-        OnlineOrquestrator.startGame(turn);
-    }    
+    // [ClientRpc]
+    // private void RpcAddPlayer(OnlinePlayerController player){
+    //     OnlineOrquestrator.addPlayer(player);
+    // }
 }

@@ -13,11 +13,8 @@ public class BoardManager : MonoBehaviour
     public Space _spacePrefab; // Space prefab to be instantiated during board creation
     public GameObject _icePrefab; // Ice prefab to be instantiated during board update
     public GameObject _firePrefab; // Fire prefab to be instantiated during board update
-<<<<<<< HEAD
     public int[] lastMovementSet = new int[3]; // First = row, Second = column, Third = playerMagic;
     public Text textTurn;
-=======
->>>>>>> 53d64bd729350ac80c8d4dc2095f9c2865628a43
 
     void Awake(){
         if (instance == null)

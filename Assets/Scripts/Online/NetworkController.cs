@@ -28,16 +28,10 @@ public class NetworkController : NetworkManager
     public override void OnServerConnect(NetworkConnection conn){
         base.OnServerConnect(conn);
         if(!conn.address.Equals("localClient")){
-<<<<<<< HEAD
-=======
-            Debug.Log("Client has connected to Server! " +conn.address);
->>>>>>> 53d64bd729350ac80c8d4dc2095f9c2865628a43
             onServerConnect?.Invoke(conn);
+            Discovery.StopBroadcast();
         }
-<<<<<<< HEAD
         //Debug.Log("Number of players: " + numPlayers);
-=======
->>>>>>> 53d64bd729350ac80c8d4dc2095f9c2865628a43
     }
 
     public override void OnClientConnect(NetworkConnection conn){

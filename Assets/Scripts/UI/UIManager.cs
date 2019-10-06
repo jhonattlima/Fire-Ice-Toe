@@ -174,18 +174,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     public void enterOnMatch(ButtonMatchController button){
-        lanDiscovery.StopBroadcast();
         lanDiscovery.StopAllCoroutines();
+        lanDiscovery.StopBroadcast();
         NetworkController.singleton.networkAddress = button.data.fromAddress;
         NetworkController.singleton.StartClient();
     }
 
-=======
->>>>>>> 53d64bd729350ac80c8d4dc2095f9c2865628a43
     private void returnToLobby(){
         buttons.Clear();
+        lanDiscovery.StopAllCoroutines();
         lanDiscovery.StopBroadcast();
         GameManager.instance.multiplayerMode = false;
 
