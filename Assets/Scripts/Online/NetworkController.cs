@@ -29,9 +29,11 @@ public class NetworkController : NetworkManager
     public override void OnServerConnect(NetworkConnection conn){
         base.OnServerConnect(conn);
         if(!conn.address.Equals("localClient")){
-            Debug.Log("Client has connected to Server! " +conn.address);
+            Debug.LogError("Client has connected to Server! " +conn.address);
             onServerConnect?.Invoke(conn);
+            Discovery.StopBroadcast();
         }
+        Debug.LogError("Number of players: " + numPlayers);
     }
 
     // Check if the connection type is lan and address it to lanConnection var if it is
