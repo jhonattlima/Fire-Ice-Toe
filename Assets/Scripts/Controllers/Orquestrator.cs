@@ -11,7 +11,7 @@ public class Orquestrator : MonoBehaviour
     public AIController aiPrefab;
 
     void Awake(){
-        if (instance == null)
+                if (instance == null)
         {
             instance = this;
         }

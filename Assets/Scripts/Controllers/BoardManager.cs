@@ -12,7 +12,6 @@ public class BoardManager : MonoBehaviour
     public Space _spacePrefab; // Space prefab to be instantiated during board creation
     public GameObject _icePrefab; // Ice prefab to be instantiated during board update
     public GameObject _firePrefab; // Fire prefab to be instantiated during board update
-    public int[] lastMovementSet = new int[3];
 
     void Awake(){
         if (instance == null)
@@ -187,9 +186,6 @@ public class BoardManager : MonoBehaviour
             GameObject fire = Instantiate(_firePrefab, space.transform);
             space.setMagic(fire);
             _intBoard[i, j] = 1;
-            lastMovementSet[0] = i;
-            lastMovementSet[1] = j;
-            lastMovementSet[2] = magic;
             return true;
         } else if (magic == 2)
         {
@@ -198,9 +194,6 @@ public class BoardManager : MonoBehaviour
             GameObject ice = Instantiate(_icePrefab, space.transform);
             space.setMagic(ice);
             _intBoard[i, j] = 2;
-            lastMovementSet[0] = i;
-            lastMovementSet[1] = j;
-            lastMovementSet[2] = magic;
             return true;
         }
         return false;
