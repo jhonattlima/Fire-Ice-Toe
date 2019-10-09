@@ -182,11 +182,10 @@ public class UIManager : MonoBehaviour
     }
 
     private void returnToLobby(){
-        buttons.Clear();
         lanDiscovery.StopAllCoroutines();
         lanDiscovery.StopBroadcast();
+        buttons.Clear();
         GameManager.instance.multiplayerMode = false;
-
         panelWaitingPlayers.SetActive(false);
         panelLocalMatches.SetActive(false);
         panelOnlineMatches.SetActive(false);

@@ -330,7 +330,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Turn
+  m_Text: '
+
+'
 --- !u!222 &258060930
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -411,6 +413,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3007ec84b5a3364469bf119b1747e35b, type: 2}
+    - target: {fileID: 4140910631008182878, guid: cac7ba47f074c464c9499514c4c2998a,
+        type: 3}
+      propertyPath: textTurn
+      value: 
+      objectReference: {fileID: 258060929}
     - target: {fileID: 1314403071718533476, guid: cac7ba47f074c464c9499514c4c2998a,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -426,11 +433,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
-    - target: {fileID: 4140910631008182878, guid: cac7ba47f074c464c9499514c4c2998a,
-        type: 3}
-      propertyPath: textTurn
-      value: 
-      objectReference: {fileID: 258060929}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cac7ba47f074c464c9499514c4c2998a, type: 3}
 --- !u!1 &461594467

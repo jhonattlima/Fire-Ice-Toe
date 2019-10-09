@@ -5,6 +5,14 @@ using UnityEngine.Networking;
 
 public static class OnlineOrquestrator
 {
+    public static int turn = 0;
+    public static int player1Magic = 0;
+
+    public static void clear(){
+        turn = 0;
+        player1Magic = 0;
+    }
+
     // // VARIABLES
     // // List of players (max 2)
     // public static List<OnlinePlayerController> _playerList = new List<OnlinePlayerController>(); // ONLY SERVER WILL USE THIS

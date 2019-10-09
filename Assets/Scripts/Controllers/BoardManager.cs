@@ -71,6 +71,7 @@ public class BoardManager : MonoBehaviour
                                         lastMovementSet[0] = i;
                                         lastMovementSet[1] = j;
                                         Debug.LogError("Last movement set: " + lastMovementSet[0]  + " " + lastMovementSet[1]);
+                                        return true;
                                     } else {
                                         return setMagic(i, j, GameManager.instance.playerMagic);
                                     }
@@ -190,6 +191,7 @@ public class BoardManager : MonoBehaviour
     {
         Space space = _board[xpos, ypos];
         GameObject element = null;
+
         switch (magic)
         {
             case 1:
