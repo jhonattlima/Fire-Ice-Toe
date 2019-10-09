@@ -70,7 +70,6 @@ public class BoardManager : MonoBehaviour
                                     if(GameManager.instance.multiplayerMode){
                                         lastMovementSet[0] = i;
                                         lastMovementSet[1] = j;
-                                        Debug.LogError("Last movement set: " + lastMovementSet[0]  + " " + lastMovementSet[1]);
                                         return true;
                                     } else {
                                         return setMagic(i, j, GameManager.instance.playerMagic);
@@ -208,5 +207,21 @@ public class BoardManager : MonoBehaviour
         _intBoard[xpos, ypos] = magic;
         space.setMagic(element);
         return true;
+    }
+
+    public void setTurnMessage(int playerNumber) // Used online only
+    {   // Change the board manage turn message depending on wich player's turn is
+        string message = null;
+        if(playerNumber != OnlineOrquestrator.turn)
+        {
+            message = "Your Turn!";
+        } else 
+        {
+            message = "Opponent's turn!";
+        }
+        if(BoardManager.instance)
+        {
+            BoardManager.instance.textTurn.text = message;
+        }
     }
 }

@@ -47,6 +47,17 @@ public class LanDiscovery : NetworkDiscovery
         Debug.Log("Lan Discovery says: Starting sending broadcast " + broadcastData);
     }
 
+    public void enterOnMatch(ButtonMatchController button)
+    {
+        
+    }
+
+    // Cancel everything;
+    public void cancelLanDiscovery(){
+        StopAllCoroutines();
+        StopBroadcast();
+    }
+
     // Handle the received matches
     public override void OnReceivedBroadcast(string fromAddress, string data)
     {
