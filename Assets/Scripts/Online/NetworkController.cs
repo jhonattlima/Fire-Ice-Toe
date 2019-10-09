@@ -29,7 +29,7 @@ public class NetworkController : NetworkManager
         base.OnServerConnect(conn);
         if(!conn.address.Equals("localClient")){
             onServerConnect?.Invoke(conn);
-            Discovery.StopBroadcast();
+            //Discovery.StopBroadcast();
         }
         //Debug.Log("Number of players: " + numPlayers);
     }

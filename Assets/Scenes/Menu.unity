@@ -6678,7 +6678,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1405311943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4833acc4e0a8574c9dca9f46494b16b, type: 3}
+  m_Script: {fileID: 11500000, guid: 32e5e70202fb80549afa90c1f3640ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1465591200
@@ -9995,7 +9995,7 @@ PrefabInstance:
         type: 3}
       propertyPath: onlineDiscovery
       value: 
-      objectReference: {fileID: 1405311947}
+      objectReference: {fileID: 0}
     - target: {fileID: 6474699583300741463, guid: 82e8f49cd2f18cf4188684ffd67cbd68,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -27,8 +27,6 @@ public class UIManager : MonoBehaviour
     public GameObject panelLanListContent;
     public LanDiscovery lanDiscovery;
     public Text lanInputField;
-
-    // Online variables
     public OnlineDiscovery onlineDiscovery;
 
     private void Awake()
@@ -177,21 +175,18 @@ public class UIManager : MonoBehaviour
     public void enterOnMatch(ButtonMatchController button){
         if(GameManager.instance.lanMode)
         {
-            lanDiscovery.StopAllCoroutines();
-            lanDiscovery.StopBroadcast();
-            NetworkController.singleton.networkAddress = button.lanMatch.fromAddress;
-            NetworkController.singleton.StartClient();
+            lanDiscovery.enterOnMatch(button);
         } 
         else
         {
-            onlineDiscovery.stopListeningMatches();
+            onlineDiscovery.enterOnMatch(button);
         } 
     }
 
     private void returnToLobby()
     {
-        lanDiscovery.cancelLanDiscovery();
-        onlineDiscovery.startListeningMatches();
+        lanDiscovery.stopListeningMatches();
+        onlineDiscovery.stopListeningMatches();
         buttons.Clear();
         GameManager.instance.multiplayerMode = false;
         panelWaitingPlayers.SetActive(false);

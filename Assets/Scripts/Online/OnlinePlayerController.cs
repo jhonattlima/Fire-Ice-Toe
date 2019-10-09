@@ -41,7 +41,7 @@ public class OnlinePlayerController : NetworkBehaviour
         if(!isLocalPlayer) return;
         if((isServer && OnlineOrquestrator.turn == 2) || (!isServer && OnlineOrquestrator.turn == 1))
         {   // Logic for player if it is his turn
-            if(BoardManager.instance != null)
+            if(BoardManager.instance != null && !played)
             {   // Logic if board already exists
                 if(BoardManager.instance.getHit())
                 {   // Prevent a fast player from playing twice and cast magic in all clients boards
