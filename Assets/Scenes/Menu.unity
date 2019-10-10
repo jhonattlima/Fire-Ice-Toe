@@ -9995,7 +9995,7 @@ PrefabInstance:
         type: 3}
       propertyPath: onlineDiscovery
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1405311947}
     - target: {fileID: 6474699583300741463, guid: 82e8f49cd2f18cf4188684ffd67cbd68,
         type: 3}
       propertyPath: m_LocalPosition.x
