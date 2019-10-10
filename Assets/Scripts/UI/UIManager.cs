@@ -63,13 +63,13 @@ public class UIManager : MonoBehaviour
                 panelOptions.SetActive(true);
                 break;
             case "easy":
-                panelMainMenu.SetActive(false);
+                panelGameMode.SetActive(false);
                 GameManager.instance.difficulty = "Easy";
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
                 panelMagicSelection.SetActive(true);
                 break;
             case "hard":
-                panelMainMenu.SetActive(false);
+                panelGameMode.SetActive(false);
                 GameManager.instance.difficulty = "Impossible";
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
                 panelMagicSelection.SetActive(true);
@@ -83,6 +83,11 @@ public class UIManager : MonoBehaviour
                 panelGameMode.SetActive(false);
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
                 panelMainMenu.SetActive(true);
+                break;
+            case "MagicBack":
+                panelMagicSelection.SetActive(false);
+                SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
+                panelGameMode.SetActive(true);
                 break;
             case "OptionsBack":
                 panelOptions.SetActive(false);
