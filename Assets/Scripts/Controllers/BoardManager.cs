@@ -14,7 +14,9 @@ public class BoardManager : MonoBehaviour
     public GameObject _icePrefab; // Ice prefab to be instantiated during board update
     public GameObject _firePrefab; // Fire prefab to be instantiated during board update
     public int[] lastMovementSet = new int[2]; // First = row, Second = column;
-    public Text textTurn;
+    public Image imageTurn;
+    public Sprite spriteYourTurnPrefab;
+    public Sprite spriteOpponentTurnPrefab;
 
     void Awake(){
         if (instance == null)
@@ -211,17 +213,12 @@ public class BoardManager : MonoBehaviour
 
     public void setTurnMessage(int playerNumber) // Used online only
     {   // Change the board manage turn message depending on wich player's turn is
-        string message = null;
         if(playerNumber != OnlineOrquestrator.turn)
         {
-            message = "Your Turn!";
+            imageTurn.sprite = spriteYourTurnPrefab;
         } else 
         {
-            message = "Opponent's turn!";
-        }
-        if(BoardManager.instance)
-        {
-            BoardManager.instance.textTurn.text = message;
+            imageTurn.sprite = spriteOpponentTurnPrefab;
         }
     }
 }
