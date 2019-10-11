@@ -7286,6 +7286,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonTemplate
       objectReference: {fileID: 0}
+    - target: {fileID: 6159863805874937655, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6159863805874937641, guid: 1f04acbae3c2f8a4c810d84d1121621d,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -7326,6 +7331,29 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 430232234}
+    - target: {fileID: 6159863805874937641, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_Transition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6159863805874937641, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6205ad2df62584794a4ca2322793789b,
+        type: 3}
+    - target: {fileID: 6159863805874937641, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 38247bc7818f24e69acff4a9862c1cc9,
+        type: 3}
+    - target: {fileID: 6159863805874937641, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e3a619429dd43416d9f3db9aa03c98d6,
+        type: 3}
     - target: {fileID: 6159863805874937640, guid: 1f04acbae3c2f8a4c810d84d1121621d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7389,7 +7417,7 @@ PrefabInstance:
     - target: {fileID: 6159863805874937640, guid: 1f04acbae3c2f8a4c810d84d1121621d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 75.3
       objectReference: {fileID: 0}
     - target: {fileID: 6159863805874937640, guid: 1f04acbae3c2f8a4c810d84d1121621d,
         type: 3}
@@ -7430,6 +7458,37 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6159863805874937642, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4d67b9ccee2c24ea498e9ef530268de4,
+        type: 3}
+    - target: {fileID: 6159863805874937642, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6159863804944403635, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6159863804944403635, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6159863804944403635, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6159863804944403635, guid: 1f04acbae3c2f8a4c810d84d1121621d,
+        type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f04acbae3c2f8a4c810d84d1121621d, type: 3}
