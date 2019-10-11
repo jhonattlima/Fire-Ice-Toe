@@ -12,6 +12,7 @@ public class StoredData{
     public string data;
     public float expiration;
 
+
     public StoredData(string fromAddress, string id, string data, float expiration){
         this.fromAddress = fromAddress;
         this.id = id;
@@ -25,6 +26,7 @@ public class LanDiscovery : NetworkDiscovery
     // Variables
     private StoredData[] storedDatas;
     private bool isBroadcasting = false;
+    private bool isHost = false;
 
     public void listenMatches()
     {   // Start listening matches
@@ -43,6 +45,7 @@ public class LanDiscovery : NetworkDiscovery
         base.broadcastData = "fireicetoe/" + name + "/" + Random.Range(1, 10000);
         StartAsServer();
         NetworkController.singleton.StartHost();
+        isHost = true;
         Debug.Log("Lan Discovery says: Created match " + broadcastData + ". Waiting someone to connect.");
     }
 
@@ -60,6 +63,11 @@ public class LanDiscovery : NetworkDiscovery
     public void cancelLanDiscovery(){
         StopAllCoroutines();
         if(isBroadcasting) StopBroadcast();
+        if(isHost)
+        { 
+            NetworkController.singleton.StopHost();
+        }
+        isHost= false;
         isBroadcasting = false;
     }
 
