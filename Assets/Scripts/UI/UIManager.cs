@@ -45,10 +45,11 @@ public class UIManager : MonoBehaviour
     {
         MusicPlayer.instance.Play(GameManager.instance.musicMainMenu);
     }
-    
+
     public void buttonEvent(string button)
     {
-        switch(button){
+        switch (button)
+        {
             case "play":
                 panelMainMenu.SetActive(false);
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
