@@ -3,7 +3,15 @@ guid: 51e68391411bc9c418cf2fcf6b563830
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _spacePrefab: {instanceID: 0}
+  - _icePrefab: {instanceID: 0}
+  - _firePrefab: {instanceID: 0}
+  - imageTurn: {instanceID: 0}
+  - spriteYourTurnPrefab: {fileID: 21300000, guid: ceaa1a3e8838e41f79ab36cc7589e062,
+      type: 3}
+  - spriteOpponentTurnPrefab: {fileID: 21300000, guid: 1b8de70668609490fb3e09ec120bedb0,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
