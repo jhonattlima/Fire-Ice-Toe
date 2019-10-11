@@ -218,16 +218,11 @@ public class UIManager : MonoBehaviour
         panelMainMenu.SetActive(true);
     }
 
-<<<<<<< HEAD
     private void startButtonsList(){
         foreach(Button button in buttons)
         {
             Destroy(button.gameObject);
         }
-=======
-    private void startButtonsList()
-    {
->>>>>>> 1b8d6623ade7cd8a9c47907d2e3fbd08d13d696a
         buttons.Clear();
         for (int i = 0; i < GameManager.instance.maxMatches; i++)
         {
@@ -238,15 +233,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     public void updateMatchesList(StoredData[] storedDatas) 
     {   // Handle data from LanDiscovery
         for (int i=0; i<storedDatas.Length; i++)
-=======
-    public void updateMatchesList(StoredData[] storedDatas) // Handle data from LanDiscovery
-    {
-        for (int i = 0; i < storedDatas.Length; i++)
->>>>>>> 1b8d6623ade7cd8a9c47907d2e3fbd08d13d696a
         {
             if (storedDatas[i] != null)
             {
