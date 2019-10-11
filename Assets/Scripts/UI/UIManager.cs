@@ -82,6 +82,11 @@ public class UIManager : MonoBehaviour
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
                 panelMainMenu.SetActive(true);
                 break;
+            case "MagicBack":
+                panelMagicSelection.SetActive(false);
+                SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
+                panelGameMode.SetActive(true);
+                break;
             case "OptionsBack":
                 panelOptions.SetActive(false);
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
@@ -103,18 +108,24 @@ public class UIManager : MonoBehaviour
             case "fire":
                 GameManager.instance.setPlayerMagic(1);
                 SFXPlayer.instance.Play(GameManager.instance.charBurn);
-                if(GameManager.instance.multiplayerMode == true){
+                if (GameManager.instance.multiplayerMode == true)
+                {
                     switchToMultiplayerWaitingLobby();
-                } else {
+                }
+                else
+                {
                     StartCoroutine(callScene());
                 }
                 break;
             case "ice":
                 GameManager.instance.setPlayerMagic(2);
                 SFXPlayer.instance.Play(GameManager.instance.charFreeze);
-                if(GameManager.instance.multiplayerMode == true){
+                if (GameManager.instance.multiplayerMode == true)
+                {
                     switchToMultiplayerWaitingLobby();
-                } else {
+                }
+                else
+                {
                     StartCoroutine(callScene());
                 }
                 break;
@@ -142,18 +153,23 @@ public class UIManager : MonoBehaviour
                 panelLocalMatches.SetActive(true);
                 break;
             case "create":
-                if(GameManager.instance.multiplayerMode)
+                if (GameManager.instance.multiplayerMode)
                 {
                     // Check if textbox is empty
-                    if(string.IsNullOrEmpty(lanInputField.text)){
+                    if (string.IsNullOrEmpty(lanInputField.text))
+                    {
                         panelLocalMatches.SetActive(false);
                         panelEmptyRoomName.SetActive(true);
-                    } else {
+                    }
+                    else
+                    {
                         panelLocalMatches.SetActive(false);
                         panelMagicSelection.SetActive(true);
                     }
                     break;
-                } else {
+                }
+                else
+                {
                     // Check if online textbox is empty
                     break;
                 }
@@ -163,25 +179,30 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void switchToMultiplayerWaitingLobby(){
+    private void switchToMultiplayerWaitingLobby()
+    {
         panelMagicSelection.SetActive(false);
         panelWaitingPlayers.SetActive(true);
-        if(GameManager.instance.lanMode){
+        if (GameManager.instance.lanMode)
+        {
             lanDiscovery.createMatch(lanInputField.text);
-        } else {
+        }
+        else
+        {
             onlineDiscovery.createMatch(lanInputField.text);
         }
     }
 
-    public void enterOnMatch(ButtonMatchController button){
-        if(GameManager.instance.lanMode)
+    public void enterOnMatch(ButtonMatchController button)
+    {
+        if (GameManager.instance.lanMode)
         {
             lanDiscovery.enterOnMatch(button);
-        } 
+        }
         else
         {
             onlineDiscovery.enterOnMatch(button);
-        } 
+        }
     }
 
     private void returnToLobby()
@@ -197,13 +218,18 @@ public class UIManager : MonoBehaviour
         panelMainMenu.SetActive(true);
     }
 
+<<<<<<< HEAD
     private void startButtonsList(){
         foreach(Button button in buttons)
         {
             Destroy(button.gameObject);
         }
+=======
+    private void startButtonsList()
+    {
+>>>>>>> 1b8d6623ade7cd8a9c47907d2e3fbd08d13d696a
         buttons.Clear();
-        for (int i =0; i<GameManager.instance.maxMatches; i++)
+        for (int i = 0; i < GameManager.instance.maxMatches; i++)
         {
             Button newButton = Instantiate(buttonMatchPrefab, panelLocalMatches.transform.position, panelLocalMatches.transform.rotation);
             newButton.transform.SetParent(panelLanListContent.transform, false);
@@ -212,17 +238,23 @@ public class UIManager : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     public void updateMatchesList(StoredData[] storedDatas) 
     {   // Handle data from LanDiscovery
         for (int i=0; i<storedDatas.Length; i++)
+=======
+    public void updateMatchesList(StoredData[] storedDatas) // Handle data from LanDiscovery
+    {
+        for (int i = 0; i < storedDatas.Length; i++)
+>>>>>>> 1b8d6623ade7cd8a9c47907d2e3fbd08d13d696a
         {
-            if(storedDatas[i] != null)
+            if (storedDatas[i] != null)
             {
                 buttons[i].gameObject.GetComponentInChildren<Text>().text = storedDatas[i].data;
                 buttons[i].gameObject.GetComponent<ButtonMatchController>().lanMatch = storedDatas[i];
                 buttons[i].gameObject.SetActive(true);
-            } 
-            else 
+            }
+            else
             {
                 buttons[i].gameObject.SetActive(false);
             }
@@ -235,18 +267,18 @@ public class UIManager : MonoBehaviour
         if (storedMatches == null) return;
         foreach (MatchInfoSnapshot match in storedMatches)
         {
-            if(match != null)
+            if (match != null)
             {
                 buttons[counter].gameObject.GetComponentInChildren<Text>().text = match.name;
                 buttons[counter].gameObject.GetComponent<ButtonMatchController>().match = match;
                 buttons[counter].gameObject.SetActive(true);
-                counter ++;
+                counter++;
             }
         }
         while (counter < GameManager.instance.maxMatches)
         {
             buttons[counter].gameObject.SetActive(false);
-            counter ++;
+            counter++;
         }
     }
 
