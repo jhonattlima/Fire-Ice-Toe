@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class OnlinePlayerController : NetworkBehaviour
 {
     // Variables
-    private static OnlinePlayerController localPlayer;
+    public static OnlinePlayerController localPlayer;
     public int playerMagic; // If it is fire or ice
     public int playerNumber; // If it is player 1 or 2
     public bool played = false;

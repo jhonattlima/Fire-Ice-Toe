@@ -11,6 +11,7 @@ public class StoredData{
     public string id;
     public string data;
     public float expiration;
+
     public StoredData(string fromAddress, string id, string data, float expiration){
         this.fromAddress = fromAddress;
         this.id = id;
@@ -22,17 +23,13 @@ public class StoredData{
 public class LanDiscovery : NetworkDiscovery
 {
     // Variables
-    private float refreshTime = 1f;
     private StoredData[] storedDatas;
     private bool isBroadcasting = false;
 
-    void Start()
-    {
-        storedDatas = new StoredData[GameManager.instance.maxMatches];
-    }
-
     public void listenMatches()
     {   // Start listening matches
+        storedDatas = null;
+        storedDatas = new StoredData[Constants.SYSTEM_MAXMATCHES];
         StartCoroutine(cleanOldSRegisters());
         base.Initialize();
         base.StartAsClient();
@@ -42,8 +39,7 @@ public class LanDiscovery : NetworkDiscovery
 
     public void createMatch(string name)
     {   // Create a new match
-        if(isBroadcasting) StopBroadcast();
-        isBroadcasting = false;
+        StopBroadcast();
         base.broadcastData = "fireicetoe/" + name + "/" + Random.Range(1, 10000);
         StartAsServer();
         NetworkController.singleton.StartHost();
@@ -60,13 +56,8 @@ public class LanDiscovery : NetworkDiscovery
         Debug.Log("Lan Discovery says: Entered on a match.");
     }
 
-    public void cancelMatch()
-    {
-        NetworkController.singleton.StopHost();
-    } 
-
     // Cancel everything;
-    public void stopListeningMatches(){
+    public void cancelLanDiscovery(){
         StopAllCoroutines();
         if(isBroadcasting) StopBroadcast();
         isBroadcasting = false;
@@ -80,11 +71,14 @@ public class LanDiscovery : NetworkDiscovery
         //if(!fromAddress.Contains("10.")) return; // Turn on on PUCRS
         bool changed = false;
         string[] splitData = data.Split('/');
-        if(splitData[0].Equals("fireicetoe")){
-            StoredData info = new StoredData(fromAddress, splitData[splitData.Length-1],  splitData[1], Time.time + refreshTime);
-            for(int i =0; i < GameManager.instance.maxMatches; i++){
-                if(storedDatas[i] != null && storedDatas[i].id.Equals(info.id)){
-                    storedDatas[i].expiration = Time.time+refreshTime;
+        if(splitData[0].Equals("fireicetoe"))
+        {
+            StoredData info = new StoredData(fromAddress, splitData[splitData.Length-1],  splitData[1], Time.time + Constants.SYSTEM_ONLINE_MATCHES_REFRESHTIME);
+            for(int i =0; i < Constants.SYSTEM_MAXMATCHES; i++)
+            {
+                if(storedDatas[i] != null && storedDatas[i].id.Equals(info.id))
+                {
+                    storedDatas[i].expiration = Time.time + Constants.SYSTEM_ONLINE_MATCHES_REFRESHTIME;
                     break;
                 }
                 else if(storedDatas[i] == null){
@@ -102,14 +96,15 @@ public class LanDiscovery : NetworkDiscovery
         while(true)
         {
             bool changed = false;
-            for (int i = 0; i<GameManager.instance.maxMatches; i++){
+            for (int i = 0; i < Constants.SYSTEM_MAXMATCHES; i++)
+            {
                 if(storedDatas[i] != null && storedDatas[i].expiration <= Time.time){
                     storedDatas[i] = null;
                     changed = true;
                 }
             }
             if(changed) UIManager.instance.updateMatchesList(storedDatas);
-            yield return new WaitForSeconds(refreshTime);
+            yield return new WaitForSeconds(Constants.SYSTEM_ONLINE_MATCHES_REFRESHTIME);
         }
     }
 }

@@ -9,7 +9,7 @@ public class AIController : MonoBehaviour
     private int line, column; // For use in minimax, getting the best line, column to move
     // AI play
     public bool play() {
-        if (GameManager.instance.difficulty.Equals("Easy"))
+        if (GameManager.instance.difficulty.Equals(Constants.SYSTEM_DIFFICULTY_EASY))
         {
             dummyPlay(_boardManagerPrefab.getBoard()); // Check the dummy play and do it
         } else

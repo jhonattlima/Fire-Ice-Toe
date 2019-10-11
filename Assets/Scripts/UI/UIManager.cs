@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public GameObject panelWaitingPlayers;
     public GameObject panelEmptyRoomName;
     public Button buttonMatchPrefab;
+    public GameObject networkController;
     private List<Button> buttons = new List<Button>();
 
     // Multiplayer variables
@@ -44,30 +45,30 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         MusicPlayer.instance.Play(GameManager.instance.musicMainMenu);
-    }
-    
+    }  
+
     public void buttonEvent(string button)
     {
         switch(button){
-            case "play":
+            case Constants.BUTTON_PLAY:
                 panelMainMenu.SetActive(false);
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
                 panelGameMode.SetActive(true);
                 break;
-            case "options":
+            case Constants.BUTTON_OPTIONS:
                 panelMainMenu.SetActive(false);
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
                 panelOptions.SetActive(true);
                 break;
-            case "easy":
+            case Constants.SYSTEM_DIFFICULTY_EASY:
                 panelMainMenu.SetActive(false);
-                GameManager.instance.difficulty = "Easy";
+                GameManager.instance.difficulty = Constants.SYSTEM_DIFFICULTY_EASY;
                 SFXPlayer.instance.Play(Constants.BUTTON_CONFIRMATION);
                 panelMagicSelection.SetActive(true);
                 break;
-            case "hard":
+            case Constants.SYSTEM_DIFFICULTY_HARD:
                 panelMainMenu.SetActive(false);
-                GameManager.instance.difficulty = "Impossible";
+                GameManager.instance.difficulty = Constants.SYSTEM_DIFFICULTY_HARD;
                 SFXPlayer.instance.Play(GameManager.instance.buttonConfirmation);
                 panelMagicSelection.SetActive(true);
                 break;
@@ -185,9 +186,8 @@ public class UIManager : MonoBehaviour
 
     private void returnToLobby()
     {
-        lanDiscovery.stopListeningMatches();
-        onlineDiscovery.stopListeningMatches();
-        buttons.Clear();
+        if(GameManager.instance.lanMode) lanDiscovery.cancelLanDiscovery();
+        else onlineDiscovery.cancelOnlineDiscovery();
         GameManager.instance.multiplayerMode = false;
         panelWaitingPlayers.SetActive(false);
         panelLocalMatches.SetActive(false);
@@ -198,6 +198,10 @@ public class UIManager : MonoBehaviour
     }
 
     private void startButtonsList(){
+        foreach(Button button in buttons)
+        {
+            Destroy(button.gameObject);
+        }
         buttons.Clear();
         for (int i =0; i<GameManager.instance.maxMatches; i++)
         {
@@ -208,8 +212,8 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void updateMatchesList(StoredData[] storedDatas) // Handle data from LanDiscovery
-    {
+    public void updateMatchesList(StoredData[] storedDatas) 
+    {   // Handle data from LanDiscovery
         for (int i=0; i<storedDatas.Length; i++)
         {
             if(storedDatas[i] != null)
@@ -225,8 +229,8 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void updateMatchesList(MatchInfoSnapshot[] storedMatches) // Handle data from OnlineDiscovery
-    {
+    public void updateMatchesList(MatchInfoSnapshot[] storedMatches) 
+    {   // Handle data from OnlineDiscovery
         int counter = 0;
         if (storedMatches == null) return;
         foreach (MatchInfoSnapshot match in storedMatches)

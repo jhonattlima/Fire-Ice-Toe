@@ -9,8 +9,7 @@ public class OnlineDiscovery : MonoBehaviour
 {
     //Variables
     private MatchInfoSnapshot[] storedMatches;
-    private  float refreshTime = 1f;
-
+ 
     void Awake()
     {
         storedMatches = new MatchInfoSnapshot[Constants.SYSTEM_MAXMATCHES];
@@ -18,6 +17,7 @@ public class OnlineDiscovery : MonoBehaviour
 
     public void startListeningMatches(){
         Debug.Log("Online Discovery says: Started to listen new matches.");
+        //NetworkController.singleton.StartMatchMaker();
         StartCoroutine(routineListenMatches());
     }
 
@@ -36,41 +36,50 @@ public class OnlineDiscovery : MonoBehaviour
 
     public void enterOnMatch(ButtonMatchController button)
     {
-        stopListeningMatches();
         Debug.Log("Online Discovery says: Entering on match.");
+        stopListeningMatches();
         NetworkController.Match.JoinMatch(button.match.networkId, "", "", "", 0, 0, NetworkController.singleton.OnMatchJoined);
     }
 
-    public void cancelMatch()
+    public void cancelOnlineDiscovery()
     {
-
+        Debug.Log("Online Discovery says: Cancelling match.");
+        OnlineOrquestrator.cancelOnlineMatch();
+        // if(startedServer) NetworkController.Match.DestroyMatch(NetworkController.singleton.matchInfo.networkId, 
+        // NetworkController.singleton.matchInfo.domain, OnMatchDestroy);
+        // NetworkController.singleton.StopMatchMaker();
+        // Destroy(OnlinePlayerController.localPlayer.gameObject);
+        // if(startedServer) NetworkController.singleton.StopServer();
+        // startedServer = false;
     }
 
     private IEnumerator routineListenMatches()
     {
         List<MatchInfoSnapshot> updatedMatches;
+        Debug.Log("Online Discovery says: Listening matches.");
         while(true)
         {
-            NetworkController.Match.ListMatches(0, GameManager.instance.maxMatches, "", true, 0, 0, NetworkController.singleton.OnMatchList);
+            NetworkController.Match.ListMatches(0, Constants.SYSTEM_MAXMATCHES, "", true, 0, 0, NetworkController.singleton.OnMatchList);
             updatedMatches = NetworkController.singleton.matches;
             int counter = 0;
             if(updatedMatches != null && updatedMatches.Count > 0)
             {
                 foreach(var match in updatedMatches)
                 {
-                    if (counter >= GameManager.instance.maxMatches) break;
-                    storedMatches[counter] = match;
-                    counter ++;
+                    if (counter < Constants.SYSTEM_MAXMATCHES)
+                    {
+                        storedMatches[counter] = match;
+                        counter ++; 
+                    } break;
                 }
-                while(counter < GameManager.instance.maxMatches)
-                {
+            }
+            while(counter < Constants.SYSTEM_MAXMATCHES)
+            {
                     storedMatches[counter] = null;
                     counter ++;
-                }
-                Debug.Log("Reached end of listenMatches");
-                UIManager.instance.updateMatchesList(storedMatches);
             }
-            yield return new WaitForSeconds(refreshTime);
+            UIManager.instance.updateMatchesList(storedMatches);
+            yield return new WaitForSeconds(Constants.SYSTEM_ONLINE_MATCHES_REFRESHTIME);
         }
     }
 }

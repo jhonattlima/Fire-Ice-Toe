@@ -8,14 +8,8 @@ public class SceneController : MonoBehaviour
     public static SceneController instance;
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
         DontDestroyOnLoad(this);
     }
 
@@ -23,18 +17,18 @@ public class SceneController : MonoBehaviour
     {
         switch (sceneName)
         {
-            case "Board 3x3":
+            case Constants.SCENE_BOARD:
                 SceneManager.LoadScene(GameManager.instance.sceneBoard, LoadSceneMode.Single);
                 MusicPlayer.instance.Play(GameManager.instance.musicBoard);
                 break;
-            case "Menu":
+            case Constants.SCENE_MENU:
                 SceneManager.LoadScene(GameManager.instance.sceneMainMenu, LoadSceneMode.Single);
                 MusicPlayer.instance.Play(GameManager.instance.musicMainMenu);
                 break;
-            case "Game Over":
+            case Constants.SCENE_GAMEOVER:
                 SceneManager.LoadScene(GameManager.instance.sceneGameOver, LoadSceneMode.Single);
                 break;
-            case "Quit":
+            case Constants.SYSTEM_QUITGAME:
                 Application.Quit();
                 break;
         }

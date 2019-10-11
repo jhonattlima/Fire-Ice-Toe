@@ -29,7 +29,6 @@ public class NetworkController : NetworkManager
         base.OnServerConnect(conn);
         if(!conn.address.Equals("localClient")){
             onServerConnect?.Invoke(conn);
-            //Discovery.StopBroadcast();
         }
         //Debug.Log("Number of players: " + numPlayers);
     }
@@ -41,8 +40,17 @@ public class NetworkController : NetworkManager
         }
     }
 
-    // No ideia why
     public override void OnClientError(NetworkConnection conn, int errorCode){
         base.OnClientError(conn, errorCode);
+    }
+
+    public override void OnClientDisconnect(NetworkConnection conn)
+    {
+        OnlineOrquestrator.restartOnlineGame();
+    }
+
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        OnlineOrquestrator.restartOnlineGame();
     }
 }
