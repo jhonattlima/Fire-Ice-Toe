@@ -34,8 +34,11 @@ public class GameOver : MonoBehaviour
 
     IEnumerator restartGame()
     {
+        NetworkController.singleton.StopHost();
         string sceneMainMenu = GameManager.instance.sceneMainMenu; 
-        Destroy(GameManager.instance);
+        Destroy(GameManager.instance.gameObject);
+        Destroy(NetworkController.singleton.gameObject);
+        OnlineOrquestrator.clear();
         yield return new WaitForSeconds(5);
         SceneController.instance.changeScene(sceneMainMenu);
     }

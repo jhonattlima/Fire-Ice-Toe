@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class BoardManager : MonoBehaviour
     public Space _spacePrefab; // Space prefab to be instantiated during board creation
     public GameObject _icePrefab; // Ice prefab to be instantiated during board update
     public GameObject _firePrefab; // Fire prefab to be instantiated during board update
+    public int[] lastMovementSet = new int[2]; // First = row, Second = column;
+    public Text textTurn;
 
     void Awake(){
         if (instance == null)
@@ -64,7 +67,13 @@ public class BoardManager : MonoBehaviour
                             {
                                 if(space == _board[i, j])
                                 {
-                                    return setMagic(i, j, GameManager.instance.playerMagic);
+                                    if(GameManager.instance.multiplayerMode){
+                                        lastMovementSet[0] = i;
+                                        lastMovementSet[1] = j;
+                                        return true;
+                                    } else {
+                                        return setMagic(i, j, GameManager.instance.playerMagic);
+                                    }
                                 }
                             }
                         }
@@ -177,25 +186,42 @@ public class BoardManager : MonoBehaviour
         return this._boardSize;
     }
 
-    public bool setMagic(int i, int j, int magic)
+    public bool setMagic(int xpos, int ypos, int magic)
     {
-        if(magic == 1)
+        Space space = _board[xpos, ypos];
+        GameObject element = null;
+
+        switch (magic)
         {
-            Space space = _board[i, j];
-            SFXPlayer.instance.Play(GameManager.instance.SFXFire);
-            GameObject fire = Instantiate(_firePrefab, space.transform);
-            space.setMagic(fire);
-            _intBoard[i, j] = 1;
-            return true;
-        } else if (magic == 2)
-        {
-            Space space = _board[i, j];
-            SFXPlayer.instance.Play(GameManager.instance.SFXIce);
-            GameObject ice = Instantiate(_icePrefab, space.transform);
-            space.setMagic(ice);
-            _intBoard[i, j] = 2;
-            return true;
+            case 1:
+                SFXPlayer.instance.Play(GameManager.instance.SFXFire);
+                element = Instantiate(_firePrefab, space.transform);  
+                break;
+            case 2:
+                SFXPlayer.instance.Play(GameManager.instance.SFXIce);
+                element = Instantiate(_icePrefab, space.transform);
+                break;
+            default:
+                return false;
         }
-        return false;
+        _intBoard[xpos, ypos] = magic;
+        space.setMagic(element);
+        return true;
+    }
+
+    public void setTurnMessage(int playerNumber) // Used online only
+    {   // Change the board manage turn message depending on wich player's turn is
+        string message = null;
+        if(playerNumber != OnlineOrquestrator.turn)
+        {
+            message = "Your Turn!";
+        } else 
+        {
+            message = "Opponent's turn!";
+        }
+        if(BoardManager.instance)
+        {
+            BoardManager.instance.textTurn.text = message;
+        }
     }
 }

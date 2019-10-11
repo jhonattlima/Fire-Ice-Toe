@@ -24,25 +24,52 @@ public class LanDiscovery : NetworkDiscovery
     // Variables
     private float refreshTime = 1f;
     private StoredData[] storedDatas;
+    private bool isBroadcasting = false;
 
-    void Start(){
+    void Start()
+    {
         storedDatas = new StoredData[GameManager.instance.maxMatches];
-        StartCoroutine(cleanOldSRegisters());
     }
 
-    // Start listening matches
-    public void listenMatches(){
+    public void listenMatches()
+    {   // Start listening matches
+        StartCoroutine(cleanOldSRegisters());
         base.Initialize();
         base.StartAsClient();
+        isBroadcasting = true;
+        Debug.Log("Lan Discovery says: Started to listen to matches.");
     }
 
-    // Create a new match
-    public void createMatch(string name){
-        StopBroadcast();
-        base.Initialize();
+    public void createMatch(string name)
+    {   // Create a new match
+        if(isBroadcasting) StopBroadcast();
+        isBroadcasting = false;
         base.broadcastData = "fireicetoe/" + name + "/" + Random.Range(1, 10000);
-        base.StartAsServer();
-        Debug.Log("Lan Discovery says: Starting sending broadcast " + broadcastData);
+        StartAsServer();
+        NetworkController.singleton.StartHost();
+        Debug.Log("Lan Discovery says: Created match " + broadcastData + ". Waiting someone to connect.");
+    }
+
+    public void enterOnMatch(ButtonMatchController button)
+    {   // Enter on the game
+        StopAllCoroutines();
+        if(isBroadcasting) StopBroadcast();
+        isBroadcasting = false;
+        NetworkController.singleton.networkAddress = button.lanMatch.fromAddress;
+        NetworkController.singleton.StartClient();
+        Debug.Log("Lan Discovery says: Entered on a match.");
+    }
+
+    public void cancelMatch()
+    {
+        NetworkController.singleton.StopHost();
+    } 
+
+    // Cancel everything;
+    public void stopListeningMatches(){
+        StopAllCoroutines();
+        if(isBroadcasting) StopBroadcast();
+        isBroadcasting = false;
     }
 
     // Handle the received matches
@@ -50,11 +77,11 @@ public class LanDiscovery : NetworkDiscovery
     {
         Debug.Log("Lan Discovery says: Received a new broadcast: " + data);
         base.OnReceivedBroadcast(fromAddress, data);
+        //if(!fromAddress.Contains("10.")) return; // Turn on on PUCRS
         bool changed = false;
         string[] splitData = data.Split('/');
         if(splitData[0].Equals("fireicetoe")){
             StoredData info = new StoredData(fromAddress, splitData[splitData.Length-1],  splitData[1], Time.time + refreshTime);
-            
             for(int i =0; i < GameManager.instance.maxMatches; i++){
                 if(storedDatas[i] != null && storedDatas[i].id.Equals(info.id)){
                     storedDatas[i].expiration = Time.time+refreshTime;
