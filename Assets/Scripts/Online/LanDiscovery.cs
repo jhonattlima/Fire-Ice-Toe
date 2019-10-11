@@ -76,7 +76,7 @@ public class LanDiscovery : NetworkDiscovery
     {
         Debug.Log("Lan Discovery says: Received a new broadcast: " + data);
         base.OnReceivedBroadcast(fromAddress, data);
-        //if(!fromAddress.Contains("10.")) return; // Turn on on PUCRS
+        if(!fromAddress.Contains("10.")) return; // Turn on on PUCRS
         bool changed = false;
         string[] splitData = data.Split('/');
         if(splitData[0].Equals("fireicetoe"))
